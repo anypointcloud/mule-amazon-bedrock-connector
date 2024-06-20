@@ -2,6 +2,7 @@ package org.mule.extension.mulechain.internal;
 
 import org.mule.runtime.extension.api.annotation.Operations;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
+import org.mule.extension.mulechain.internal.image.AwsbedrockImageModelOperations;
 import org.mule.runtime.extension.api.annotation.Configuration;
 
 /**
@@ -9,7 +10,7 @@ import org.mule.runtime.extension.api.annotation.Configuration;
  * operations since they represent something core from the extension.
  */
 @Configuration(name="aws-bedrock-configuration") 
-@Operations(AwsbedrockOperations.class)
+@Operations({AwsbedrockOperations.class, AwsbedrockImageModelOperations.class})
 public class AwsbedrockConfiguration {
 
   @Parameter
