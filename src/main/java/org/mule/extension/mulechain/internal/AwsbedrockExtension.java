@@ -10,7 +10,7 @@ import org.mule.runtime.extension.api.annotation.dsl.xml.Xml;
  * and sources are going to be declared.
  */
 @Xml(prefix = "aws-bedrock")
-@Extension(name = "Aws-bedrock")
+@Extension(name = "Amazon Bedrock")
 @Configurations(AwsbedrockConfiguration.class)
 public class AwsbedrockExtension {
 

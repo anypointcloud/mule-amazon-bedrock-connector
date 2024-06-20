@@ -17,7 +17,7 @@
         </config>
     </configs>
     <connections/>
-    <extension name="Aws-bedrock">
+    <extension name="Amazon Bedrock">
         <description><![CDATA[This is the main class of an extension, is the entry point from which configurations, connection providers, operations and sources are going to be declared.]]></description>
         <parameters/>
     </extension>
@@ -35,6 +35,15 @@
                     <description><![CDATA[]]></description>
                 </parameter>
                 <parameter name="region">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="temperature">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="topP">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="maxTokenCount">
                     <description><![CDATA[]]></description>
                 </parameter>
                 <parameter name="target">

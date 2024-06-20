@@ -1,5 +1,5 @@
 :toc:               left
-:toc-title:         Aws-bedrock Module
+:toc-title:         Amazon Bedrock Module
 :toclevels:         2
 :last-update-label!:
 :docinfo:
@@ -7,7 +7,7 @@
 :icons: font
 
 
-= Aws-bedrock Module Documentation Reference
+= Amazon Bedrock Module Documentation Reference
 
 +++
 This is the main class of an extension, is the entry point from which configurations, connection providers, operations and sources are going to be declared.
@@ -58,6 +58,9 @@ Example of an operation that uses the configuration and a connection instance to
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-text-express-v1+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
+| Temperature a| Number |  |  +++0.7+++ | {nbsp}
+| Top P a| Number |  |  +++0.9+++ | {nbsp}
+| Max Token Count a| Number |  |  +++512+++ | {nbsp}
 | Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
 | Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
 |======================

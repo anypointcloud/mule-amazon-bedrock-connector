@@ -26,6 +26,32 @@ public class AwsbedrockParameters {
 		return region;
 	}
 
+	@Parameter
+	@Expression(ExpressionSupport.SUPPORTED)
+	@Optional(defaultValue = "0.7")
+	private Float temperature;
+
+	public Float getTemperature() {
+		return temperature;
+	}
+
+	@Parameter
+	@Expression(ExpressionSupport.SUPPORTED)
+	@Optional(defaultValue = "0.9")
+	private Float topP;
+
+	public Float getTopP() {
+		return topP;
+	}
+
+	@Parameter
+	@Expression(ExpressionSupport.SUPPORTED)
+	@Optional(defaultValue = "512")
+	private Integer maxTokenCount;
+
+	public Integer getMaxTokenCount() {
+		return maxTokenCount;
+	}
 
 
 }
