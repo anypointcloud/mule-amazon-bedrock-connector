@@ -56,10 +56,25 @@ public class AwsbedrockOperations {
   
 	  String SentimentTemplate = "Analyze sentiment of: " + TextToAnalyze + ". Does it have a positive sentiment? Respond in JSON with Sentiment (value of POSITIVE, NEGATIVE, NEUTRAL) and IsPositive (true or false)";
       
-      String response = AwsbedrockPayloadHelper.invokeModel(SentimentTemplate, configuration, awsBedrockParameters);
+    String response = AwsbedrockPayloadHelper.invokeModel(SentimentTemplate, configuration, awsBedrockParameters);
       
-      return response;
+    return response;
   }
+
+
+   /**
+   * Get foundational models by Id.
+   */
+  @MediaType(value = ANY, strict = false)
+  @Alias("FOUNDATIONAL-model-details")  
+  public String getFoundationalModelByModelId(@Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockParameters awsBedrockParameters) {
+  
+    String response = AwsbedrockPayloadHelper.getFoundationModel(configuration, awsBedrockParameters);
+    
+    return response;
+  }
+
+
 
 
 }

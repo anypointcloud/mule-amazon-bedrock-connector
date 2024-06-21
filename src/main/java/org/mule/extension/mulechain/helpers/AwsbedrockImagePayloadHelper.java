@@ -7,6 +7,7 @@ import java.util.Base64;
 
 import javax.imageio.ImageIO;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.mule.extension.mulechain.internal.AwsbedrockConfiguration;
 import org.mule.extension.mulechain.internal.AwsbedrockParameters;
@@ -94,7 +95,7 @@ public class AwsbedrockImagePayloadHelper {
   
 
 
-  private static String getAmazonTitanImage(String prompt, String avoidInImage) {
+  private static String getAmazonTitanImage(String prompt, String avoidInImage, AwsbedrockImageParameters awsBedrockParameters) {
 
     return new JSONObject()
                 .put("taskType", "TEXT_IMAGE")
@@ -102,22 +103,39 @@ public class AwsbedrockImagePayloadHelper {
                         .put("text", prompt)
                         .put("negativeText", avoidInImage))
                 .put("imageGenerationConfig", new JSONObject()
-                        .put("numberOfImages", 1)
-                        .put("height", 1024)
-                        .put("width", 1024)
-                        .put("cfgScale", 8.0)
-                        .put("seed", 0))
+                        .put("numberOfImages", awsBedrockParameters.getNumOfImages())
+                        .put("height", awsBedrockParameters.getHeight())
+                        .put("width", awsBedrockParameters.getWidth())
+                        .put("cfgScale", awsBedrockParameters.getCfgScale())
+                        .put("seed", awsBedrockParameters.getSeed()))
                 .toString();
 }
 
+private static String getStabilityAiDiffusionImage(String prompt, String avoidInImage, AwsbedrockImageParameters awsBedrockParameters) {
+        JSONArray textPromptsArray = new JSONArray()
+                .put(new JSONObject()
+                        .put("text", prompt)
+                        .put("weight", 0));
 
+        // Construct the main JSON object
+        JSONObject json = new JSONObject()
+                .put("text_prompts", textPromptsArray)
+                .put("height", awsBedrockParameters.getHeight())
+                .put("width", awsBedrockParameters.getWidth())
+                .put("cfg_scale", awsBedrockParameters.getCfgScale())
+                .put("seed", awsBedrockParameters.getSeed());
 
+    return json.toString();
+}
 
 
   private static String identifyPayload(String prompt, String avoidInImage, AwsbedrockImageParameters awsBedrockParameters){
     if (awsBedrockParameters.getModelName().contains("amazon.titan-image")) {
-        return getAmazonTitanImage(prompt, avoidInImage);
+        return getAmazonTitanImage(prompt, avoidInImage, awsBedrockParameters);
+    } else if (awsBedrockParameters.getModelName().contains("stability.stable-diffusion-xl")) {
+        return getStabilityAiDiffusionImage(prompt, avoidInImage, awsBedrockParameters);
     } else {
+
         return "Unsupported model";
     }
 
@@ -153,8 +171,25 @@ public static byte[] generateImage(String modelId, String body, AwsbedrockConfig
 
     JSONObject responseBody = new JSONObject(response.body().asUtf8String());
 
-    String base64Image = responseBody.getJSONArray("images").getString(0);
-    byte[] imageBytes = Base64.getDecoder().decode(base64Image);
+    byte[] imageBytes = null;
+
+    if (modelId.contains("amazon.titan-image")) {
+        String base64Image = responseBody.getJSONArray("images").getString(0);
+       imageBytes = Base64.getDecoder().decode(base64Image);
+    } else if (modelId.contains("stability.stable-diffusion-xl")) {
+        JSONArray artifactsArray = responseBody.getJSONArray("artifacts");
+        String base64Image = artifactsArray.getJSONObject(0).getString("base64");
+
+        // Decode the base64 string
+        imageBytes = Base64.getDecoder().decode(base64Image);
+    } 
+
+
+
+
+
+    // String base64Image = responseBody.getJSONArray("images").getString(0);
+    // byte[] imageBytes = Base64.getDecoder().decode(base64Image);
 
     String finishReason = responseBody.optString("error", null);
     if (finishReason != null) {

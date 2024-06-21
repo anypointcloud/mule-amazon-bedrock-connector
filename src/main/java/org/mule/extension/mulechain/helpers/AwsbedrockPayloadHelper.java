@@ -9,8 +9,14 @@ import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient;
+import software.amazon.awssdk.core.exception.SdkException;
 import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelRequest;
 import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelResponse;
+import software.amazon.awssdk.services.bedrock.BedrockClient;
+import software.amazon.awssdk.services.bedrock.model.FoundationModelDetails;
+import software.amazon.awssdk.services.bedrock.model.GetFoundationModelRequest;
+import software.amazon.awssdk.services.bedrock.model.GetFoundationModelResponse;
+import software.amazon.awssdk.services.bedrock.model.ValidationException;
 
 public class AwsbedrockPayloadHelper {
 
@@ -241,5 +247,58 @@ private static String getLlamaText(String prompt, AwsbedrockParameters awsBedroc
         throw new RuntimeException(e);
     }
 }
+
+
+private static BedrockClient createBedrockClient(AwsbedrockConfiguration configuration, AwsbedrockParameters awsBedrockParameters) {
+    System.out.println("createBedrockClient");
+    AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(
+        configuration.getAwsAccessKeyId(), 
+        configuration.getAwsSecretAccessKey()
+    );
+
+    BedrockClient bedrockClient = BedrockClient.builder()
+    .region(getRegion(awsBedrockParameters.getRegion())) 
+    .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
+    .build();
+
+    return bedrockClient;
+}
+
+public static String getFoundationModel(AwsbedrockConfiguration configuration, AwsbedrockParameters awsBedrockParameters) {
+    System.out.println("getFoundationModel");
+
+    BedrockClient bedrockClient = createBedrockClient(configuration, awsBedrockParameters);
+    System.out.println("Here");
+
+
+    try {
+        GetFoundationModelResponse response = bedrockClient.getFoundationModel(
+            GetFoundationModelRequest.builder()
+                .modelIdentifier(awsBedrockParameters.getModelName())
+                .build()
+        );
+        FoundationModelDetails model = response.modelDetails();
+
+        System.out.println(" Model ID:                     " + model.modelId());
+        System.out.println(" Model ARN:                    " + model.modelArn());
+        System.out.println(" Model Name:                   " + model.modelName());
+        System.out.println(" Provider Name:                " + model.providerName());
+        System.out.println(" Lifecycle status:             " + model.modelLifecycle().statusAsString());
+        System.out.println(" Input modalities:             " + model.inputModalities());
+        System.out.println(" Output modalities:            " + model.outputModalities());
+        System.out.println(" Supported customizations:     " + model.customizationsSupported());
+        System.out.println(" Supported inference types:    " + model.inferenceTypesSupported());
+        System.out.println(" Response streaming supported: " + model.responseStreamingSupported());
+
+        return model.toString();
+
+    } catch (ValidationException e) {
+        throw new IllegalArgumentException(e.getMessage());
+    } catch (SdkException e) {
+        System.err.println(e.getMessage());
+        throw new RuntimeException(e);
+    }
+
+    }
 
 }

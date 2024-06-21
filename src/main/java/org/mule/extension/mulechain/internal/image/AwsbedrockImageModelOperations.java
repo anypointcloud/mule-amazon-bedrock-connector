@@ -2,8 +2,6 @@ package org.mule.extension.mulechain.internal.image;
 
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 
-import java.nio.charset.StandardCharsets;
-
 import org.mule.runtime.extension.api.annotation.Alias;
 import org.mule.runtime.extension.api.annotation.param.Config;
 import org.mule.runtime.extension.api.annotation.param.MediaType;

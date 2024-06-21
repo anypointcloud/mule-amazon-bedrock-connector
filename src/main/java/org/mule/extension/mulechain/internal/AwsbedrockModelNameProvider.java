@@ -26,19 +26,19 @@ public class AwsbedrockModelNameProvider implements ValueProvider {
 	"mistral.mixtral-8x7b-instruct-v0:1",
 	"mistral.mistral-large-2402-v1:0",
 	"mistral.mistral-small-2402-v1:0",
-	"stability.stable-diffusion-xl-v0",
-	"amazon.titan-text-express-v1:0:8k",
-	"amazon.titan-text-lite-v1:0:4k",
-	"amazon.titan-text-premier-v1:0:32K",
-	"anthropic.claude-v2:0:18k",
-	"anthropic.claude-v2:0:100k",
-	"anthropic.claude-v2:1:18k",
-	"anthropic.claude-v2:1:200k",
-	"anthropic.claude-instant-v1:2:100k",
-	"ai21.j2-ultra-v1:0:8k",
-	"cohere.command-text-v14:7:4k",
-	"cohere.command-light-text-v14:7:4k",
-	"meta.llama2-13b-chat-v1:0:4k"
+	"stability.stable-diffusion-xl-v0"
+	// "amazon.titan-text-express-v1:0:8k",
+	// "amazon.titan-text-lite-v1:0:4k",
+	// "amazon.titan-text-premier-v1:0:32K",
+	// "anthropic.claude-v2:0:18k",
+	// "anthropic.claude-v2:0:100k",
+	// "anthropic.claude-v2:1:18k",
+	// "anthropic.claude-v2:1:200k",
+	// "anthropic.claude-instant-v1:2:100k",
+	// "ai21.j2-ultra-v1:0:8k",
+	// "cohere.command-text-v14:7:4k",
+	// "cohere.command-light-text-v14:7:4k",
+	// "meta.llama2-13b-chat-v1:0:4k"
 	);
 
 	@Override
