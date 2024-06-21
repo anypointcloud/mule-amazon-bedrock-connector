@@ -1,4 +1,4 @@
-package org.mule.extension.mulechain.internal;
+package org.mule.extension.mulechain.internal.embeddings;
 import java.util.Set;
 import org.mule.runtime.api.value.Value;
 import org.mule.runtime.extension.api.values.ValueBuilder;

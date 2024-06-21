@@ -24,10 +24,9 @@ public class AwsbedrockImageModelOperations {
    */
   @MediaType(value = ANY, strict = false)
   @Alias("IMAGE-generate")
-  public String generateImage(String TextToImage, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockImageParameters awsBedrockParameters){
-      byte[] imagebytes = AwsbedrockImagePayloadHelper.invokeModel(TextToImage, configuration, awsBedrockParameters);
-      String response = new String(imagebytes, StandardCharsets.UTF_8);
-    return response;
+  public String generateImage(String TextToImage, String AvoidInImage, String fullPathOutput, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockImageParameters awsBedrockParameters){
+      String response= AwsbedrockImagePayloadHelper.invokeModel(TextToImage, AvoidInImage, fullPathOutput, configuration, awsBedrockParameters);
+      return response;
   }
 
   

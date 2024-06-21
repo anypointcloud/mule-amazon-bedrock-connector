@@ -3,7 +3,7 @@
     "id": "java",
     "attributes": {
       "type": "org.mule.extension.mulechain.internal.AwsbedrockExtension",
-      "version": "0.0.30"
+      "version": "0.0.36"
     }
   },
   "name": "Amazon Bedrock",

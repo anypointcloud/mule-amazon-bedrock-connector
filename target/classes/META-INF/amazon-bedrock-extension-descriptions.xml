@@ -104,6 +104,12 @@
                 <parameter name="TextToImage">
                     <description><![CDATA[]]></description>
                 </parameter>
+                <parameter name="AvoidInImage">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="fullPathOutput">
+                    <description><![CDATA[]]></description>
+                </parameter>
                 <parameter name="outputMimeType">
                     <description><![CDATA[The mime type of the payload that this operation outputs.]]></description>
                 </parameter>

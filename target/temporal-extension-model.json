@@ -1,14 +1,14 @@
 {
   "name": "Amazon Bedrock",
   "description": "This is the main class of an extension, is the entry point from which configurations, connection providers, operations and sources are going to be declared.",
-  "version": "0.0.30",
+  "version": "0.0.36",
   "vendor": "Mulesoft",
   "category": "COMMUNITY",
   "xmlDsl": {
     "prefix": "aws-bedrock",
     "namespace": "http://www.mulesoft.org/schema/mule/aws-bedrock",
     "schemaLocation": "http://www.mulesoft.org/schema/mule/aws-bedrock/current/mule-aws-bedrock.xsd",
-    "schemaVersion": "0.0.30",
+    "schemaVersion": "0.0.36",
     "xsdFileName": "mule-aws-bedrock.xsd"
   },
   "resources": [],
@@ -1213,6 +1213,58 @@
                     "type": "String"
                   },
                   "hasDynamicType": false,
+                  "required": true,
+                  "isConfigOverride": false,
+                  "expressionSupport": "SUPPORTED",
+                  "role": "BEHAVIOUR",
+                  "dslConfiguration": {
+                    "allowsInlineDefinition": true,
+                    "allowsReferences": true,
+                    "allowTopLevelDefinition": false
+                  },
+                  "layoutModel": {
+                    "password": false,
+                    "text": false,
+                    "query": false,
+                    "order": 2
+                  },
+                  "allowedStereotypeModels": [],
+                  "name": "AvoidInImage",
+                  "description": "",
+                  "modelProperties": {}
+                },
+                {
+                  "type": {
+                    "format": "java",
+                    "type": "String"
+                  },
+                  "hasDynamicType": false,
+                  "required": true,
+                  "isConfigOverride": false,
+                  "expressionSupport": "SUPPORTED",
+                  "role": "BEHAVIOUR",
+                  "dslConfiguration": {
+                    "allowsInlineDefinition": true,
+                    "allowsReferences": true,
+                    "allowTopLevelDefinition": false
+                  },
+                  "layoutModel": {
+                    "password": false,
+                    "text": false,
+                    "query": false,
+                    "order": 3
+                  },
+                  "allowedStereotypeModels": [],
+                  "name": "fullPathOutput",
+                  "description": "",
+                  "modelProperties": {}
+                },
+                {
+                  "type": {
+                    "format": "java",
+                    "type": "String"
+                  },
+                  "hasDynamicType": false,
                   "required": false,
                   "isConfigOverride": false,
                   "expressionSupport": "SUPPORTED",
@@ -1226,7 +1278,7 @@
                     "password": false,
                     "text": false,
                     "query": false,
-                    "order": 2,
+                    "order": 4,
                     "tabName": "Advanced"
                   },
                   "allowedStereotypeModels": [],
@@ -1277,7 +1329,7 @@
                     "password": false,
                     "text": false,
                     "query": false,
-                    "order": 3
+                    "order": 5
                   },
                   "allowedStereotypeModels": [],
                   "name": "modelName",
@@ -1312,7 +1364,7 @@
                     "password": false,
                     "text": false,
                     "query": false,
-                    "order": 4
+                    "order": 6
                   },
                   "allowedStereotypeModels": [],
                   "name": "region",
@@ -1356,7 +1408,7 @@
                     "password": false,
                     "text": false,
                     "query": false,
-                    "order": 5
+                    "order": 7
                   },
                   "allowedStereotypeModels": [],
                   "name": "numOfImages",
@@ -1400,7 +1452,7 @@
                     "password": false,
                     "text": false,
                     "query": false,
-                    "order": 6
+                    "order": 8
                   },
                   "allowedStereotypeModels": [],
                   "name": "height",
@@ -1444,7 +1496,7 @@
                     "password": false,
                     "text": false,
                     "query": false,
-                    "order": 7
+                    "order": 9
                   },
                   "allowedStereotypeModels": [],
                   "name": "width",
@@ -1487,7 +1539,7 @@
                     "password": false,
                     "text": false,
                     "query": false,
-                    "order": 8
+                    "order": 10
                   },
                   "allowedStereotypeModels": [],
                   "name": "cfgScale",
@@ -1531,7 +1583,7 @@
                     "password": false,
                     "text": false,
                     "query": false,
-                    "order": 9
+                    "order": 11
                   },
                   "allowedStereotypeModels": [],
                   "name": "seed",
@@ -1572,7 +1624,7 @@
                     "password": false,
                     "text": false,
                     "query": false,
-                    "order": 10,
+                    "order": 12,
                     "tabName": "Advanced"
                   },
                   "allowedStereotypeModels": [],
@@ -1603,7 +1655,7 @@
                     "password": false,
                     "text": false,
                     "query": false,
-                    "order": 11,
+                    "order": 13,
                     "tabName": "Advanced"
                   },
                   "allowedStereotypeModels": [],

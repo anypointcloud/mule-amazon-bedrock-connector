@@ -1,4 +1,5 @@
 package org.mule.extension.mulechain.internal.image;
+import org.mule.extension.mulechain.internal.AwsbedrockRegionNameProvider;
 import org.mule.runtime.api.meta.ExpressionSupport;
 import org.mule.runtime.extension.api.annotation.Expression;
 import org.mule.runtime.extension.api.annotation.param.Optional;
@@ -18,7 +19,7 @@ public class AwsbedrockImageParameters {
 
 	@Parameter
 	@Expression(ExpressionSupport.SUPPORTED)
-	@OfValues(AwsbedrockModelNameProviderImage.class)
+	@OfValues(AwsbedrockRegionNameProvider.class)
 	@Optional(defaultValue = "us-east-1")
 	private String region;
 

@@ -8,7 +8,7 @@ import org.mule.runtime.extension.api.values.ValueResolvingException;
 public class AwsbedrockModelNameProviderImage implements ValueProvider {
 
 	private static final Set<Value> VALUES_FOR = ValueBuilder.getValuesFor(
-	"amazon.titan-image-generator-v1:0");
+	"amazon.titan-image-generator-v1");
 
 	@Override
 	public Set<Value> resolve() throws ValueResolvingException {

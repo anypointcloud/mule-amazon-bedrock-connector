@@ -9,21 +9,18 @@ import javax.imageio.ImageIO;
 
 import org.json.JSONObject;
 import org.mule.extension.mulechain.internal.AwsbedrockConfiguration;
-import org.mule.extension.mulechain.internal.AwsbedrockParameters;
 import org.mule.extension.mulechain.internal.image.AwsbedrockImageParameters;
-import org.mule.runtime.extension.internal.MuleDsqlParser.relation_return;
 
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.SdkBytes;
-import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient;
 import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelRequest;
 import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelResponse;
 import java.awt.image.BufferedImage;
 
-public class AwsbedrockImagePayloadHelper {
+public class AwsbedrockImagePayloadHelperBackup {
 
 
   private static Region getRegion(String region){
@@ -94,13 +91,12 @@ public class AwsbedrockImagePayloadHelper {
   
 
 
-  private static String getAmazonTitanImage(String prompt, String avoidInImage) {
+  private static String getAmazonTitanImage(String prompt) {
 
     return new JSONObject()
                 .put("taskType", "TEXT_IMAGE")
                 .put("textToImageParams", new JSONObject()
-                        .put("text", prompt)
-                        .put("negativeText", avoidInImage))
+                        .put("text", prompt))
                 .put("imageGenerationConfig", new JSONObject()
                         .put("numberOfImages", 1)
                         .put("height", 1024)
@@ -114,9 +110,9 @@ public class AwsbedrockImagePayloadHelper {
 
 
 
-  private static String identifyPayload(String prompt, String avoidInImage, AwsbedrockImageParameters awsBedrockParameters){
+  private static String identifyPayload(String prompt, AwsbedrockImageParameters awsBedrockParameters){
     if (awsBedrockParameters.getModelName().contains("amazon.titan-image")) {
-        return getAmazonTitanImage(prompt, avoidInImage);
+        return getAmazonTitanImage(prompt);
     } else {
         return "Unsupported model";
     }
@@ -164,14 +160,23 @@ public static byte[] generateImage(String modelId, String body, AwsbedrockConfig
     return imageBytes;
 }
 
-   public static String invokeModel(String prompt, String avoidInImage, String fullPath, AwsbedrockConfiguration configuration, AwsbedrockImageParameters awsBedrockParameters) {
+   public static byte[] invokeModel(String prompt, String fullPath, AwsbedrockConfiguration configuration, AwsbedrockImageParameters awsBedrockParameters) {
+        // Replace with your actual AWS credentials and region
+        Region region = getRegion(awsBedrockParameters.getRegion()); //Region.US_EAST_1;
 
-        Region region = getRegion(awsBedrockParameters.getRegion());
+        String modelId = awsBedrockParameters.getModelName(); //"amazon.titan-image-generator-v1";
 
-        String modelId = awsBedrockParameters.getModelName();
-
-
-         String body = identifyPayload(prompt, avoidInImage, awsBedrockParameters); 
+        String body = new JSONObject()
+                    .put("taskType", "TEXT_IMAGE")
+                    .put("textToImageParams", new JSONObject()
+                            .put("text", prompt))
+                    .put("imageGenerationConfig", new JSONObject()
+                            .put("numberOfImages", 1)
+                            .put("height", 1024)
+                            .put("width", 1024)
+                            .put("cfgScale", 8.0)
+                            .put("seed", 0))
+                    .toString();//identifyPayload(prompt, awsBedrockParameters);
 
         System.out.println(body);
 
@@ -184,17 +189,18 @@ public static byte[] generateImage(String modelId, String body, AwsbedrockConfig
             bis.close();
 
             // Save the image to a file
-            String filePath = fullPath; 
+            String filePath = fullPath; // Specify the path where you want to save the image
             File outputImageFile = new File(filePath);
             ImageIO.write(bufferedImage, "png", outputImageFile);
            
             // Display image
             if (bufferedImage != null) {
                 System.out.println("Successfully generated image.");
+                // You can add further processing like saving the image to file or displaying it in GUI
             } else {
                 System.out.println("Failed to generate image.");
             }
-            return filePath;
+            return imageBytes;
 
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
