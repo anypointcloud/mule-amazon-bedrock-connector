@@ -1,8 +1,12 @@
 package org.mule.extension.mulechain.helpers;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.mule.extension.mulechain.internal.AwsbedrockConfiguration;
 import org.mule.extension.mulechain.internal.AwsbedrockParameters;
+import org.mule.extension.mulechain.internal.AwsbedrockParams;
+import org.mule.extension.mulechain.internal.AwsbedrockParamsModelDetails;
+
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.SdkBytes;
@@ -13,10 +17,17 @@ import software.amazon.awssdk.core.exception.SdkException;
 import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelRequest;
 import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelResponse;
 import software.amazon.awssdk.services.bedrock.BedrockClient;
+import software.amazon.awssdk.services.bedrock.model.CustomModelSummary;
 import software.amazon.awssdk.services.bedrock.model.FoundationModelDetails;
+import software.amazon.awssdk.services.bedrock.model.FoundationModelSummary;
+import software.amazon.awssdk.services.bedrock.model.GetCustomModelRequest;
+import software.amazon.awssdk.services.bedrock.model.GetCustomModelResponse;
 import software.amazon.awssdk.services.bedrock.model.GetFoundationModelRequest;
 import software.amazon.awssdk.services.bedrock.model.GetFoundationModelResponse;
+import software.amazon.awssdk.services.bedrock.model.ListCustomModelsResponse;
+import software.amazon.awssdk.services.bedrock.model.ListFoundationModelsResponse;
 import software.amazon.awssdk.services.bedrock.model.ValidationException;
+import java.util.List;
 
 public class AwsbedrockPayloadHelper {
 
@@ -249,8 +260,7 @@ private static String getLlamaText(String prompt, AwsbedrockParameters awsBedroc
 }
 
 
-private static BedrockClient createBedrockClient(AwsbedrockConfiguration configuration, AwsbedrockParameters awsBedrockParameters) {
-    System.out.println("createBedrockClient");
+private static BedrockClient createBedrockClient(AwsbedrockConfiguration configuration, AwsbedrockParams awsBedrockParameters) {
     AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(
         configuration.getAwsAccessKeyId(), 
         configuration.getAwsSecretAccessKey()
@@ -264,33 +274,52 @@ private static BedrockClient createBedrockClient(AwsbedrockConfiguration configu
     return bedrockClient;
 }
 
-public static String getFoundationModel(AwsbedrockConfiguration configuration, AwsbedrockParameters awsBedrockParameters) {
-    System.out.println("getFoundationModel");
 
-    BedrockClient bedrockClient = createBedrockClient(configuration, awsBedrockParameters);
-    System.out.println("Here");
+private static BedrockClient createBedrockClientDetails(AwsbedrockConfiguration configuration, AwsbedrockParamsModelDetails awsBedrockParameters) {
+    AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(
+        configuration.getAwsAccessKeyId(), 
+        configuration.getAwsSecretAccessKey()
+    );
+
+    BedrockClient bedrockClient = BedrockClient.builder()
+    .region(getRegion(awsBedrockParameters.getRegion())) 
+    .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
+    .build();
+
+    return bedrockClient;
+}
+
+
+
+
+public static String getFoundationModel(AwsbedrockConfiguration configuration, AwsbedrockParamsModelDetails awsBedrockParameters) {
+
+    BedrockClient bedrockClient = createBedrockClientDetails(configuration, awsBedrockParameters);
 
 
     try {
+        
         GetFoundationModelResponse response = bedrockClient.getFoundationModel(
             GetFoundationModelRequest.builder()
                 .modelIdentifier(awsBedrockParameters.getModelName())
                 .build()
         );
+        
         FoundationModelDetails model = response.modelDetails();
 
-        System.out.println(" Model ID:                     " + model.modelId());
-        System.out.println(" Model ARN:                    " + model.modelArn());
-        System.out.println(" Model Name:                   " + model.modelName());
-        System.out.println(" Provider Name:                " + model.providerName());
-        System.out.println(" Lifecycle status:             " + model.modelLifecycle().statusAsString());
-        System.out.println(" Input modalities:             " + model.inputModalities());
-        System.out.println(" Output modalities:            " + model.outputModalities());
-        System.out.println(" Supported customizations:     " + model.customizationsSupported());
-        System.out.println(" Supported inference types:    " + model.inferenceTypesSupported());
-        System.out.println(" Response streaming supported: " + model.responseStreamingSupported());
+        JSONObject jsonModel = new JSONObject();
+        jsonModel.put("modelId", model.modelId());
+        jsonModel.put("modelArn", model.modelArn());
+        jsonModel.put("modelName", model.modelName());
+        jsonModel.put("providerName", model.providerName());
+        jsonModel.put("modelLifecycleStatus", model.modelLifecycle().statusAsString());
+        jsonModel.put("inputModalities", model.inputModalities());
+        jsonModel.put("outputModalities", model.outputModalities());
+        jsonModel.put("customizationsSupported", model.customizationsSupported());
+        jsonModel.put("inferenceTypesSupported", model.inferenceTypesSupported());
+        jsonModel.put("responseStreamingSupported", model.responseStreamingSupported());
 
-        return model.toString();
+        return jsonModel.toString();
 
     } catch (ValidationException e) {
         throw new IllegalArgumentException(e.getMessage());
@@ -300,5 +329,131 @@ public static String getFoundationModel(AwsbedrockConfiguration configuration, A
     }
 
     }
+
+
+public static String listFoundationModels(AwsbedrockConfiguration configuration, AwsbedrockParams awsBedrockParameters) {
+
+        BedrockClient bedrockClient = createBedrockClient(configuration, awsBedrockParameters);
+
+        try {
+            ListFoundationModelsResponse response = bedrockClient.listFoundationModels(r -> {});
+
+            List<FoundationModelSummary> models = response.modelSummaries();
+
+            System.out.println(response.toString());
+            System.out.println(models.toString());
+            
+            JSONArray modelsArray = new JSONArray();
+
+            if (models.isEmpty()) {
+                System.out.println("No available foundation models" );
+            } else {
+                for (FoundationModelSummary model : models) {
+
+                    // Create a JSONObject for each model and add to JSONArray
+                    JSONObject modelJson = new JSONObject();
+                    modelJson.put("modelId", model.modelId());
+                    modelJson.put("modelName", model.providerName());
+                    modelJson.put("provider", model.modelName());
+                    modelJson.put("modelArn", model.modelArn());
+                    modelJson.put("modelLifecycleStatus", model.modelLifecycle().statusAsString());
+                    modelJson.put("inputModalities", model.inputModalities());
+                    modelJson.put("outputModalities", model.outputModalities());
+                    modelJson.put("customizationsSupported", model.customizationsSupported());
+                    modelJson.put("inferenceTypesSupported", model.inferenceTypesSupported());
+                    modelJson.put("responseStreamingSupported", model.responseStreamingSupported());
+                                
+                    modelsArray.put(modelJson);
+                }
+            }
+
+            return modelsArray.toString();
+
+        } catch (SdkClientException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+
+public static String listCustomModels(AwsbedrockConfiguration configuration, AwsbedrockParams awsBedrockParameters) {
+
+        BedrockClient bedrockClient = createBedrockClient(configuration, awsBedrockParameters);
+
+        try {
+
+            ListCustomModelsResponse response = bedrockClient.listCustomModels(r -> {});
+            //ListFoundationModelsResponse response = bedrockClient.listFoundationModels(r -> {});
+
+            List<CustomModelSummary> models = response.modelSummaries();
+
+            System.out.println(response.toString());
+            System.out.println(models.toString());
+            
+            JSONArray modelsArray = new JSONArray();
+
+            if (models.isEmpty()) {
+                System.out.println("No available foundation models.");
+            } else {
+                for (CustomModelSummary model : models) {
+                    // Create a JSONObject for each model and add to JSONArray
+                    JSONObject modelJson = new JSONObject();
+                    modelJson.put("provider", model.modelName());
+                    modelJson.put("modelArn", model.modelArn());
+                    modelJson.put("baseModelArn", model.baseModelArn());
+                    modelJson.put("baseModelName", model.baseModelName());
+                    modelJson.put("customizationType", model.customizationTypeAsString());
+                                
+                    modelsArray.put(modelJson);
+                }
+            }
+
+            return modelsArray.toString();
+
+        } catch (SdkClientException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String getCustomModel(AwsbedrockConfiguration configuration, AwsbedrockParamsModelDetails awsBedrockParameters) {
+
+        BedrockClient bedrockClient = createBedrockClientDetails(configuration, awsBedrockParameters);
+    
+    
+        try {
+            
+            GetCustomModelResponse response = bedrockClient.getCustomModel(
+                //GetCustomModelRequest.builder()
+                GetCustomModelRequest.builder()
+                    .modelIdentifier(awsBedrockParameters.getModelName())
+                    .build()
+            );
+            
+            //CustomModelSummary model = response.;
+    
+            JSONObject jsonModel = new JSONObject();
+            jsonModel.put("modelArn", response.modelArn());
+            jsonModel.put("modelName", response.modelName());
+            jsonModel.put("jobName", response.jobName());
+            jsonModel.put("jobArn", response.jobArn());
+            jsonModel.put("customizationTypeAsString", response.customizationTypeAsString());
+            jsonModel.put("baseModelArn", response.baseModelArn());
+            jsonModel.put("hyperParameters", response.hyperParameters());
+            jsonModel.put("hasHyperParameters", response.hasHyperParameters());
+            jsonModel.put("hasValidationMetrics", response.hasValidationMetrics());
+    
+            return jsonModel.toString();
+    
+        } catch (ValidationException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        } catch (SdkException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    
+        }
+
+
 
 }

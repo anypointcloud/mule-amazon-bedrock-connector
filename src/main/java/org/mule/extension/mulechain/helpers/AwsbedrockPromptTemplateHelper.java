@@ -1,6 +1,5 @@
 package org.mule.extension.mulechain.helpers;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,12 +29,6 @@ public class AwsbedrockPromptTemplateHelper {
         }
         return template;
     }
-
-
-
-
-
-
 
 
 }

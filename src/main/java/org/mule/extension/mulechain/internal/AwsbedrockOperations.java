@@ -67,7 +67,7 @@ public class AwsbedrockOperations {
    */
   @MediaType(value = ANY, strict = false)
   @Alias("FOUNDATIONAL-model-details")  
-  public String getFoundationalModelByModelId(@Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockParameters awsBedrockParameters) {
+  public String getFoundationalModelByModelId(@Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockParamsModelDetails awsBedrockParameters) {
   
     String response = AwsbedrockPayloadHelper.getFoundationModel(configuration, awsBedrockParameters);
     
@@ -75,6 +75,42 @@ public class AwsbedrockOperations {
   }
 
 
+  /**
+   * List foundational models by Id.
+   */
+  @MediaType(value = ANY, strict = false)
+  @Alias("FOUNDATIONAL-models-list")  
+  public String getFoundationalModelList(@Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockParams awsBedrockParameters) {
+  
+    String response = AwsbedrockPayloadHelper.listFoundationModels(configuration, awsBedrockParameters);
+    
+    return response;
+  }
 
+
+   /**
+   * Get custom models by Id.
+   */
+  @MediaType(value = ANY, strict = false)
+  @Alias("CUSTOM-model-details")  
+  public String getCustomModelByModelId(@Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockParamsModelDetails awsBedrockParameters) {
+  
+    String response = AwsbedrockPayloadHelper.getCustomModel(configuration, awsBedrockParameters);
+    
+    return response;
+  }
+
+
+  /**
+   * List custom models by Id.
+   */
+  @MediaType(value = ANY, strict = false)
+  @Alias("CUSTOM-models-list")  
+  public String getCustomModelList(@Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockParams awsBedrockParameters) {
+  
+    String response = AwsbedrockPayloadHelper.listCustomModels(configuration, awsBedrockParameters);
+    
+    return response;
+  }
 
 }
