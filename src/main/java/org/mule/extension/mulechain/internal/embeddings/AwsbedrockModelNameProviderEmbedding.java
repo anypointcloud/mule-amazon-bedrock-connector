@@ -10,10 +10,7 @@ public class AwsbedrockModelNameProviderEmbedding implements ValueProvider {
 	private static final Set<Value> VALUES_FOR = ValueBuilder.getValuesFor(
 	"amazon.titan-embed-text-v1",
 	"amazon.titan-embed-text-v2:0",
-	"amazon.titan-embed-text-v2:0",
-	"amazon.titan-embed-image-v1",
-	"cohere.embed-english-v3",
-	"cohere.embed-multilingual-v3"
+	"amazon.titan-embed-image-v1"
 	);
 
 	@Override

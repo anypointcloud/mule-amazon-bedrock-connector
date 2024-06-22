@@ -1,98 +1,91 @@
 package org.mule.extension.mulechain.helpers;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-
-import javax.imageio.ImageIO;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.mule.extension.mulechain.internal.AwsbedrockConfiguration;
-import org.mule.extension.mulechain.internal.AwsbedrockParameters;
 import org.mule.extension.mulechain.internal.embeddings.AwsbedrockParametersEmbedding;
-import org.mule.extension.mulechain.internal.image.AwsbedrockImageParameters;
-import org.mule.runtime.extension.internal.MuleDsqlParser.relation_return;
+
 
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.SdkBytes;
-import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient;
 import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelRequest;
 import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelResponse;
-import java.awt.image.BufferedImage;
+
 
 public class AwsbedrockEmbeddingPayloadHelper {
 
 
-  private static Region getRegion(String region){
-    switch (region) {
-      case "us-east-1":
-          return Region.US_EAST_1;
-      case "us-east-2":
-          return Region.US_EAST_2;
-      case "us-west-1":
-          return Region.US_WEST_1;
-      case "us-west-2":
-          return Region.US_WEST_2;
-      case "af-south-1":
-          return Region.AF_SOUTH_1;
-      case "ap-east-1":
-          return Region.AP_EAST_1;
-      case "ap-south-1":
-          return Region.AP_SOUTH_1;
-      case "ap-south-2":
-          return Region.AP_SOUTH_2;
-      case "ap-southeast-1":
-          return Region.AP_SOUTHEAST_1;
-      case "ap-southeast-2":
-          return Region.AP_SOUTHEAST_2;
-      case "ap-southeast-3":
-          return Region.AP_SOUTHEAST_3;
-      case "ap-southeast-4":
-          return Region.AP_SOUTHEAST_4;
-      case "ap-northeast-1":
-          return Region.AP_NORTHEAST_1;
-      case "ap-northeast-2":
-          return Region.AP_NORTHEAST_2;
-      case "ap-northeast-3":
-          return Region.AP_NORTHEAST_3;
-      case "ca-central-1":
-          return Region.CA_CENTRAL_1;
-      case "eu-central-1":
-          return Region.EU_CENTRAL_1;
-      case "eu-central-2":
-          return Region.EU_CENTRAL_2;
-      case "eu-west-1":
-          return Region.EU_WEST_1;
-      case "eu-west-2":
-          return Region.EU_WEST_2;
-      case "eu-west-3":
-          return Region.EU_WEST_3;
-      case "eu-north-1":
-          return Region.EU_NORTH_1;
-      case "eu-south-1":
-          return Region.EU_SOUTH_1;
-      case "eu-south-2":
-          return Region.EU_SOUTH_2;
-      case "me-south-1":
-          return Region.ME_SOUTH_1;
-      case "me-central-1":
-          return Region.ME_CENTRAL_1;
-      case "sa-east-1":
-          return Region.SA_EAST_1;
-      case "us-gov-east-1":
-          return Region.US_GOV_EAST_1;
-      case "us-gov-west-1":
-          return Region.US_GOV_WEST_1;
-      default:
-          throw new IllegalArgumentException("Unknown region: " + region);
-  }
- }
+//   private static Region getRegion(String region){
+//     switch (region) {
+//       case "us-east-1":
+//           return Region.US_EAST_1;
+//       case "us-east-2":
+//           return Region.US_EAST_2;
+//       case "us-west-1":
+//           return Region.US_WEST_1;
+//       case "us-west-2":
+//           return Region.US_WEST_2;
+//       case "af-south-1":
+//           return Region.AF_SOUTH_1;
+//       case "ap-east-1":
+//           return Region.AP_EAST_1;
+//       case "ap-south-1":
+//           return Region.AP_SOUTH_1;
+//       case "ap-south-2":
+//           return Region.AP_SOUTH_2;
+//       case "ap-southeast-1":
+//           return Region.AP_SOUTHEAST_1;
+//       case "ap-southeast-2":
+//           return Region.AP_SOUTHEAST_2;
+//       case "ap-southeast-3":
+//           return Region.AP_SOUTHEAST_3;
+//       case "ap-southeast-4":
+//           return Region.AP_SOUTHEAST_4;
+//       case "ap-northeast-1":
+//           return Region.AP_NORTHEAST_1;
+//       case "ap-northeast-2":
+//           return Region.AP_NORTHEAST_2;
+//       case "ap-northeast-3":
+//           return Region.AP_NORTHEAST_3;
+//       case "ca-central-1":
+//           return Region.CA_CENTRAL_1;
+//       case "eu-central-1":
+//           return Region.EU_CENTRAL_1;
+//       case "eu-central-2":
+//           return Region.EU_CENTRAL_2;
+//       case "eu-west-1":
+//           return Region.EU_WEST_1;
+//       case "eu-west-2":
+//           return Region.EU_WEST_2;
+//       case "eu-west-3":
+//           return Region.EU_WEST_3;
+//       case "eu-north-1":
+//           return Region.EU_NORTH_1;
+//       case "eu-south-1":
+//           return Region.EU_SOUTH_1;
+//       case "eu-south-2":
+//           return Region.EU_SOUTH_2;
+//       case "me-south-1":
+//           return Region.ME_SOUTH_1;
+//       case "me-central-1":
+//           return Region.ME_CENTRAL_1;
+//       case "sa-east-1":
+//           return Region.SA_EAST_1;
+//       case "us-gov-east-1":
+//           return Region.US_GOV_EAST_1;
+//       case "us-gov-west-1":
+//           return Region.US_GOV_WEST_1;
+//       default:
+//           throw new IllegalArgumentException("Unknown region: " + region);
+//   }
+//  }
   
   
 
@@ -113,6 +106,37 @@ private static String getAmazonTitanEmbeddingG2(String prompt, AwsbedrockParamet
                 .toString();
 }
 
+private static String getAmazonTitanImageEmbeddingG1(String prompt, AwsbedrockParametersEmbedding awsBedrockParameters) {
+
+    JSONObject embeddingConfig = new JSONObject();
+        embeddingConfig.put("outputEmbeddingLength", 256);
+
+    JSONObject body = new JSONObject();
+        body.put("inputText", prompt);
+        body.put("embeddingConfig", embeddingConfig);
+    
+    return body.toString(); 
+
+}
+
+
+private static String getCoherEmbeddingModel(String prompt, AwsbedrockParametersEmbedding awsBedrockParameters) {
+
+    JSONObject jsonObject = new JSONObject();
+
+    // Add "texts" array
+    JSONArray textsArray = new JSONArray();
+    for (String text : prompt.split(".")) {
+        textsArray.put(text);
+    }
+    jsonObject.put("texts", textsArray);
+
+    // Add other fields
+    jsonObject.put("input_type", "search_query");
+
+    return jsonObject.toString();
+}
+
 
 
   private static String identifyPayload(String prompt, AwsbedrockParametersEmbedding awsBedrockParameters){
@@ -120,6 +144,10 @@ private static String getAmazonTitanEmbeddingG2(String prompt, AwsbedrockParamet
         return getAmazonTitanEmbeddingG1(prompt);
     } else if (awsBedrockParameters.getModelName().contains("amazon.titan-embed-text-v2:0")) {
         return getAmazonTitanEmbeddingG2(prompt, awsBedrockParameters);
+    } else if (awsBedrockParameters.getModelName().contains("amazon.titan-embed-image-v1")) {
+        return getAmazonTitanImageEmbeddingG1(prompt, awsBedrockParameters);
+    } else if (awsBedrockParameters.getModelName().contains("cohere.embed")) {
+        return getCoherEmbeddingModel(prompt, awsBedrockParameters);
     } else {
 
         return "Unsupported model";
@@ -164,9 +192,9 @@ public static JSONObject generateEmbedding(String modelId, String body, Awsbedro
 
 }
 
-   public static String invokeModel(String prompt, AwsbedrockConfiguration configuration, AwsbedrockParametersEmbedding awsBedrockParameters) {
+public static String invokeModel(String prompt, AwsbedrockConfiguration configuration, AwsbedrockParametersEmbedding awsBedrockParameters) {
 
-        Region region = getRegion(awsBedrockParameters.getRegion());
+        Region region = AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion());
 
         String modelId = awsBedrockParameters.getModelName();
 
@@ -187,5 +215,11 @@ public static JSONObject generateEmbedding(String modelId, String body, Awsbedro
 
         }
     }
+
+
+    
+
+
+
 
 }

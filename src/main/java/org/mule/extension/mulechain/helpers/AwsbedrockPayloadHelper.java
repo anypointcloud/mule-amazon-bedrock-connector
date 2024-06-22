@@ -46,7 +46,7 @@ public class AwsbedrockPayloadHelper {
 
   }
 
-  private static Region getRegion(String region){
+  public static Region getRegion(String region){
     switch (region) {
       case "us-east-1":
           return Region.US_EAST_1;
@@ -203,6 +203,8 @@ private static String getLlamaText(String prompt, AwsbedrockParameters awsBedroc
         return getAnthropicClaudeText(prompt, awsBedrockParameters);
     } else if (awsBedrockParameters.getModelName().contains("ai21.j2")) {
         return getAI21Text(prompt, awsBedrockParameters);
+    } else if (awsBedrockParameters.getModelName().contains("mistral.mistral")) {
+        return getMistralAIText(prompt, awsBedrockParameters);
     } else if (awsBedrockParameters.getModelName().contains("cohere.command")) {
         return getCohereText(prompt, awsBedrockParameters);
     } else if (awsBedrockParameters.getModelName().contains("meta.llama")) {
