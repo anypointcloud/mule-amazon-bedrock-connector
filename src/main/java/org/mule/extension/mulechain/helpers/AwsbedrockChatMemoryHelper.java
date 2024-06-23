@@ -13,6 +13,7 @@ import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient;
 import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelRequest;
 import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AwsbedrockChatMemoryHelper {
@@ -186,7 +187,6 @@ private static String getLlamaText(String prompt, AwsbedrockParameters awsBedroc
     }
     return false;
 }
-
 
   private static String formatMemoryPrompt(List<String> messages) {
     StringBuilder formattedPrompt = new StringBuilder();
