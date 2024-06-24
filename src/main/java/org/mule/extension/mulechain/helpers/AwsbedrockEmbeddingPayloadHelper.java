@@ -229,7 +229,7 @@ public static String invokeModel(String prompt, AwsbedrockConfiguration configur
     }
 
 
-    public static String InvokeAdhocRAG(String prompt, String filePath, AwsbedrockConfiguration configuration, AwsbedrockParametersEmbeddingDocument awsBedrockParameters) throws IOException, SAXException, TikaException {
+public static String InvokeAdhocRAG(String prompt, String filePath, AwsbedrockConfiguration configuration, AwsbedrockParametersEmbeddingDocument awsBedrockParameters) throws IOException, SAXException, TikaException {
 
         Region region = AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion());
 
@@ -354,24 +354,27 @@ public static String invokeModel(String prompt, AwsbedrockConfiguration configur
       
       private static String[] splitByParagraphs(String text) {
         // Assuming paragraphs are separated by two or more newlines
-
-        // Split the string
-        String[] parts = text.split("\\r?\\n\\r?\\n");
-
-        // Remove the last item if it's empty
-        if (parts.length > 0 && parts[parts.length - 1].isEmpty()) {
-            parts = Arrays.copyOf(parts, parts.length - 1);
-        }
-        
-        return parts;
+       
+        return removeEmptyStrings(text.split("\\r?\\n\\r?\\n"));
       }
       
       private static String[] splitBySentences(String text) {
         // Split by sentences (simple implementation using period followed by space)
-        return text.split("(?<!Mr|Mrs|Ms|Dr|Sr|Jr|Prof)\\.\\s+");
+        return removeEmptyStrings(text.split("(?<!Mr|Mrs|Ms|Dr|Sr|Jr|Prof)\\.\\s+"));
       }
-      
-      
+
+
+      public static String[] removeEmptyStrings(String[] array) {
+        // Convert array to list
+        List<String> list = new ArrayList<>(Arrays.asList(array));
+
+        // Remove empty strings from the list
+        list.removeIf(String::isEmpty);
+
+        // Convert list back to array
+        return list.toArray(new String[0]);
+    }
+     
       
 
 
