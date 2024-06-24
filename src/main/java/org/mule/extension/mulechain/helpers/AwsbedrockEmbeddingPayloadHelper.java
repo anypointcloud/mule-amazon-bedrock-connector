@@ -3,12 +3,26 @@ package org.mule.extension.mulechain.helpers;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.mule.extension.mulechain.internal.AwsbedrockConfiguration;
 import org.mule.extension.mulechain.internal.embeddings.AwsbedrockParametersEmbedding;
+import org.mule.extension.mulechain.internal.embeddings.AwsbedrockParametersEmbeddingDocument;
+import org.mule.runtime.extension.internal.MuleDsqlParser.relation_return;
+import org.xml.sax.SAXException;
 
+import java.io.File;
+import java.io.FileInputStream;
+
+import org.apache.tika.exception.TikaException;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.pdf.*;
+import org.apache.tika.sax.BodyContentHandler;
 
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -21,76 +35,7 @@ import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelResponse;
 
 public class AwsbedrockEmbeddingPayloadHelper {
 
-
-//   private static Region getRegion(String region){
-//     switch (region) {
-//       case "us-east-1":
-//           return Region.US_EAST_1;
-//       case "us-east-2":
-//           return Region.US_EAST_2;
-//       case "us-west-1":
-//           return Region.US_WEST_1;
-//       case "us-west-2":
-//           return Region.US_WEST_2;
-//       case "af-south-1":
-//           return Region.AF_SOUTH_1;
-//       case "ap-east-1":
-//           return Region.AP_EAST_1;
-//       case "ap-south-1":
-//           return Region.AP_SOUTH_1;
-//       case "ap-south-2":
-//           return Region.AP_SOUTH_2;
-//       case "ap-southeast-1":
-//           return Region.AP_SOUTHEAST_1;
-//       case "ap-southeast-2":
-//           return Region.AP_SOUTHEAST_2;
-//       case "ap-southeast-3":
-//           return Region.AP_SOUTHEAST_3;
-//       case "ap-southeast-4":
-//           return Region.AP_SOUTHEAST_4;
-//       case "ap-northeast-1":
-//           return Region.AP_NORTHEAST_1;
-//       case "ap-northeast-2":
-//           return Region.AP_NORTHEAST_2;
-//       case "ap-northeast-3":
-//           return Region.AP_NORTHEAST_3;
-//       case "ca-central-1":
-//           return Region.CA_CENTRAL_1;
-//       case "eu-central-1":
-//           return Region.EU_CENTRAL_1;
-//       case "eu-central-2":
-//           return Region.EU_CENTRAL_2;
-//       case "eu-west-1":
-//           return Region.EU_WEST_1;
-//       case "eu-west-2":
-//           return Region.EU_WEST_2;
-//       case "eu-west-3":
-//           return Region.EU_WEST_3;
-//       case "eu-north-1":
-//           return Region.EU_NORTH_1;
-//       case "eu-south-1":
-//           return Region.EU_SOUTH_1;
-//       case "eu-south-2":
-//           return Region.EU_SOUTH_2;
-//       case "me-south-1":
-//           return Region.ME_SOUTH_1;
-//       case "me-central-1":
-//           return Region.ME_CENTRAL_1;
-//       case "sa-east-1":
-//           return Region.SA_EAST_1;
-//       case "us-gov-east-1":
-//           return Region.US_GOV_EAST_1;
-//       case "us-gov-west-1":
-//           return Region.US_GOV_WEST_1;
-//       default:
-//           throw new IllegalArgumentException("Unknown region: " + region);
-//   }
-//  }
-  
-  
-
-
-  private static String getAmazonTitanEmbeddingG1(String prompt) {
+private static String getAmazonTitanEmbeddingG1(String prompt) {
 
     return new JSONObject()
                 .put("inputText", prompt)
@@ -156,6 +101,73 @@ private static String getCoherEmbeddingModel(String prompt, AwsbedrockParameters
   }
 
 
+
+
+private static String getAmazonTitanEmbeddingG1Doc(String prompt) {
+
+    return new JSONObject()
+                .put("inputText", prompt)
+                .toString();
+}
+
+private static String getAmazonTitanEmbeddingG2Doc(String prompt, AwsbedrockParametersEmbeddingDocument awsBedrockParameters) {
+
+    return new JSONObject()
+                .put("inputText", prompt)
+                .put("dimensions", awsBedrockParameters.getDimension())
+                .put("normalize",awsBedrockParameters.getNormalize())
+                .toString();
+}
+
+private static String getAmazonTitanImageEmbeddingG1Doc(String prompt, AwsbedrockParametersEmbeddingDocument awsBedrockParameters) {
+
+    JSONObject embeddingConfig = new JSONObject();
+        embeddingConfig.put("outputEmbeddingLength", 256);
+
+    JSONObject body = new JSONObject();
+        body.put("inputText", prompt);
+        body.put("embeddingConfig", embeddingConfig);
+    
+    return body.toString(); 
+
+}
+
+
+private static String getCoherEmbeddingModelDoc(String prompt, AwsbedrockParametersEmbeddingDocument awsBedrockParameters) {
+
+    JSONObject jsonObject = new JSONObject();
+
+    // Add "texts" array
+    JSONArray textsArray = new JSONArray();
+    for (String text : prompt.split(".")) {
+        textsArray.put(text);
+    }
+    jsonObject.put("texts", textsArray);
+
+    // Add other fields
+    jsonObject.put("input_type", "search_query");
+
+    return jsonObject.toString();
+}
+
+
+
+  private static String identifyPayloadDoc(String prompt, AwsbedrockParametersEmbeddingDocument awsBedrockParameters){
+    if (awsBedrockParameters.getModelName().contains("amazon.titan-embed-text-v1")) {
+        return getAmazonTitanEmbeddingG1Doc(prompt);
+    } else if (awsBedrockParameters.getModelName().contains("amazon.titan-embed-text-v2:0")) {
+        return getAmazonTitanEmbeddingG2Doc(prompt, awsBedrockParameters);
+    } else if (awsBedrockParameters.getModelName().contains("amazon.titan-embed-image-v1")) {
+        return getAmazonTitanImageEmbeddingG1Doc(prompt, awsBedrockParameters);
+    } else if (awsBedrockParameters.getModelName().contains("cohere.embed")) {
+        return getCoherEmbeddingModelDoc(prompt, awsBedrockParameters);
+    } else {
+
+        return "Unsupported model";
+    }
+
+  }
+
 private static BedrockRuntimeClient createClient(AwsbedrockConfiguration configuration, Region region) {
 
     // Initialize the AWS credentials
@@ -217,8 +229,150 @@ public static String invokeModel(String prompt, AwsbedrockConfiguration configur
     }
 
 
-    
+    public static String InvokeAdhocRAG(String prompt, String filePath, AwsbedrockConfiguration configuration, AwsbedrockParametersEmbeddingDocument awsBedrockParameters) throws IOException, SAXException, TikaException {
 
+        Region region = AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion());
+
+        String modelId = awsBedrockParameters.getModelName();
+        List<String> corpus;
+        if (awsBedrockParameters.getOptionType().equals("FULL")) {
+            corpus = Arrays.asList(splitFullDocument(filePath,awsBedrockParameters));
+        } else {
+            corpus = Arrays.asList(splitByType(filePath,awsBedrockParameters));
+        }
+
+        String body = identifyPayloadDoc(prompt, awsBedrockParameters); 
+
+
+        try {
+
+
+            JSONObject queryResponse = generateEmbedding(modelId, body, configuration, region);
+            //Generate embedding for query
+            JSONArray queryEmbedding = queryResponse.getJSONArray("embedding");
+
+            String corpusBody=null;
+            // Generate embeddings for the corpus
+            List<JSONArray> corpusEmbeddings = new ArrayList<>();
+            for (String text : corpus) {
+                corpusBody = identifyPayloadDoc(text, awsBedrockParameters); 
+                //System.out.println(corpusBody);
+                if (text != null && !text.isEmpty()) {
+                    corpusEmbeddings.add(generateEmbedding(modelId, corpusBody, configuration, region).getJSONArray("embedding"));
+                }
+            }
+
+            // Compare embeddings and rank results
+            List<Double> similarityScores = new ArrayList<>();
+            for (JSONArray corpusEmbedding : corpusEmbeddings) {
+                similarityScores.add(calculateCosineSimilarity(queryEmbedding, corpusEmbedding));
+            }
+
+            // Rank and print results
+            List<String> results = rankAndPrintResults(corpus, similarityScores);
+
+            return results.toString();
+
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+
+        }
+    }
+
+
+
+    private static double calculateCosineSimilarity(JSONArray vec1, JSONArray vec2) {
+        double dotProduct = 0.0;
+        double normA = 0.0;
+        double normB = 0.0;
+        for (int i = 0; i < vec1.length(); i++) {
+            double a = vec1.getDouble(i);
+            double b = vec2.getDouble(i);
+            dotProduct += a * b;
+            normA += Math.pow(a, 2);
+            normB += Math.pow(b, 2);
+        }
+        return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+    }
+
+    private static List<String> rankAndPrintResults(List<String> corpus, List<Double> similarityScores) {
+        List<Integer> indices = new ArrayList<>();
+        System.out.println(corpus.size());
+        for (int i = 0; i < corpus.size(); i++) {
+            indices.add(i);
+        }
+
+        indices.sort((i, j) -> Double.compare(similarityScores.get(j), similarityScores.get(i)));
+
+        System.out.println("Ranked results:");
+        List<String> results = new ArrayList<>();
+        for (int index : indices) {
+            System.out.println("Score: " + similarityScores.get(index) + " - Text: " + corpus.get(index));
+            results.add(similarityScores.get(index) + " - " + corpus.get(index));
+        }
+        return results;
+    }
+
+    private static String getContentFromFile(String filePath) throws IOException, SAXException, TikaException {
+        BodyContentHandler handler = new BodyContentHandler();
+        Metadata metadata = new Metadata();
+        FileInputStream inputstream = new FileInputStream(new File(filePath));
+        ParseContext pcontext = new ParseContext();
+  
+        // parsing the document using PDF parser
+        PDFParser pdfparser = new PDFParser();
+        pdfparser.parse(inputstream, handler, metadata, pcontext);
+        return handler.toString();
+    }    
+
+    private static String splitFullDocument(String filePath, AwsbedrockParametersEmbeddingDocument awsBedrockParameters) throws IOException, SAXException, TikaException {
+        String content = getContentFromFile(filePath);
+        return content;
+    }
+
+
+    private static String[] splitByType(String filePath, AwsbedrockParametersEmbeddingDocument awsBedrockParameters) throws IOException, SAXException, TikaException {
+        String content = getContentFromFile(filePath);
+        String[] parts = splitContent(content, awsBedrockParameters.getOptionType());
+        return parts;
+    }
+
+
+
+    private static String[] splitContent(String text, String option) {
+        switch (option) {
+            case "PARAGRAPH":
+                return splitByParagraphs(text);
+            case "SENTENCES":
+                return splitBySentences(text);
+            default:
+                throw new IllegalArgumentException("Unknown split option: " + option);
+        }
+      }
+      
+      private static String[] splitByParagraphs(String text) {
+        // Assuming paragraphs are separated by two or more newlines
+
+        // Split the string
+        String[] parts = text.split("\\r?\\n\\r?\\n");
+
+        // Remove the last item if it's empty
+        if (parts.length > 0 && parts[parts.length - 1].isEmpty()) {
+            parts = Arrays.copyOf(parts, parts.length - 1);
+        }
+        
+        return parts;
+      }
+      
+      private static String[] splitBySentences(String text) {
+        // Split by sentences (simple implementation using period followed by space)
+        return text.split("(?<!Mr|Mrs|Ms|Dr|Sr|Jr|Prof)\\.\\s+");
+      }
+      
+      
+      
 
 
 
