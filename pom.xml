@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mule.mulechain</groupId>
     <artifactId>mulechain-bedrock</artifactId>
-    <version>0.0.80</version>
+    <version>0.0.81</version>
     <packaging>mule-extension</packaging>
     <name>Aws-bedrock Extension</name>
 

@@ -12,7 +12,6 @@ import org.json.JSONObject;
 import org.mule.extension.mulechain.internal.AwsbedrockConfiguration;
 import org.mule.extension.mulechain.internal.embeddings.AwsbedrockParametersEmbedding;
 import org.mule.extension.mulechain.internal.embeddings.AwsbedrockParametersEmbeddingDocument;
-import org.mule.runtime.extension.internal.MuleDsqlParser.relation_return;
 import org.xml.sax.SAXException;
 
 import java.io.File;

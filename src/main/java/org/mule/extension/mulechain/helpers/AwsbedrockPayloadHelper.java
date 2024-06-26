@@ -382,6 +382,7 @@ public static String listCustomModels(AwsbedrockConfiguration configuration, Aws
 
         BedrockClient bedrockClient = createBedrockClient(configuration, awsBedrockParameters);
 
+
         try {
 
             ListCustomModelsResponse response = bedrockClient.listCustomModels(r -> {});
