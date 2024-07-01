@@ -34,6 +34,7 @@ import software.amazon.awssdk.services.bedrock.model.GetFoundationModelResponse;
 import software.amazon.awssdk.services.bedrock.model.ListCustomModelsResponse;
 import software.amazon.awssdk.services.bedrock.model.ListFoundationModelsResponse;
 import software.amazon.awssdk.services.bedrock.model.ValidationException;
+import software.amazon.awssdk.services.bedrockagent.BedrockAgentAsyncClient;
 import software.amazon.awssdk.services.bedrockagent.BedrockAgentClient;
 import software.amazon.awssdk.services.bedrockagentruntime.BedrockAgentRuntimeAsyncClient;
 import software.amazon.awssdk.services.bedrockagentruntime.BedrockAgentRuntimeClient;
@@ -52,11 +53,14 @@ import software.amazon.awssdk.services.bedrockagent.model.CreateAgentRequest;
 import software.amazon.awssdk.services.bedrockagent.model.CreateAgentResponse;
 import software.amazon.awssdk.services.bedrockagent.model.GetAgentRequest;
 import software.amazon.awssdk.services.bedrockagent.model.GetAgentResponse;
+import software.amazon.awssdk.services.bedrockagent.model.ListAgentsRequest;
+import software.amazon.awssdk.services.bedrockagent.model.ListAgentsResponse;
 import software.amazon.awssdk.services.bedrockagent.model.PrepareAgentRequest;
 import software.amazon.awssdk.services.bedrockagent.model.PrepareAgentResponse;
 import software.amazon.awssdk.services.bedrockagent.model.Agent;
 import software.amazon.awssdk.services.bedrockagent.model.AgentAlias;
 import software.amazon.awssdk.services.bedrockagent.model.AgentStatus;
+import software.amazon.awssdk.services.bedrockagent.model.AgentSummary;
 import software.amazon.awssdk.services.bedrockagent.model.CreateAgentAliasRequest;
 import software.amazon.awssdk.services.bedrockagent.model.CreateAgentAliasResponse;
 import software.amazon.awssdk.services.bedrockagent.model.AgentAlias;
@@ -302,31 +306,25 @@ private static IamClient createIamClient(AwsbedrockConfiguration configuration, 
 }
 
 
-private Pair<String, String> requestNameAndModelFromUser(BedrockAgentRuntimeAsyncClient bedrockWrapper) {
-    List<String> existingAgentNames = bedrockWrapper.listAgents().stream()
-            .map(agent -> agent.agentName())
+private String getAgentNames(BedrockAgentClient bedrockagent) {
+        // Build a ListAgentsRequest instance without any filter criteria
+        ListAgentsRequest listAgentsRequest = ListAgentsRequest.builder().build();
+
+        // Call the listAgents method of the BedrockAgentClient instance
+        ListAgentsResponse listAgentsResponse = bedrockagent.listAgents(listAgentsRequest);
+
+
+        // Retrieve the list of agent summaries from the ListAgentsResponse instance
+        List<AgentSummary> agentSummaries = listAgentsResponse.agentSummaries();
+
+        // Extract the list of agent names from the list of agent summaries
+        List<String> agentNames = agentSummaries.stream()
+            .map(AgentSummary::agentName) // specify the type of the elements returned by the map() method
             .collect(Collectors.toList());
 
-    String name;
-    while (true) {
-        name = q.ask("Enter an agent name: ", this::isValidAgentName);
-        if (!existingAgentNames.stream().anyMatch(n -> n.equalsIgnoreCase(name))) {
-            break;
-        }
-        System.out.println("Agent " + name + " conflicts with an existing agent. Please use a different name.");
-    }
+        return agentNames.toString();
 
-    List<String> models = Arrays.asList("anthropic.claude-instant-v1", "anthropic.claude-v2");
-    String modelId = models.get(q.choose("Which foundation model would you like to use? ", models));
-
-    return new Pair<>(name, modelId);
 }
-
-private boolean isValidAgentName(String name) {
-    // Add your validation logic here
-    return true;
-}
-
 
 private Role createAgentRole(String modelId, String postfix, String RolePolicyName, AwsbedrockConfiguration configuration, AwsbedrockAgentsParameters awsBedrockParameters) {
     String roleName = "AmazonBedrockExecutionRoleForAgents_" + postfix;
