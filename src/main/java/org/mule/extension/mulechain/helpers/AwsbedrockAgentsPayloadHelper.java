@@ -7,6 +7,11 @@ import org.mule.extension.mulechain.internal.AwsbedrockParameters;
 import org.mule.extension.mulechain.internal.AwsbedrockParams;
 import org.mule.extension.mulechain.internal.AwsbedrockParamsModelDetails;
 import org.mule.extension.mulechain.internal.agents.AwsbedrockAgentsParameters;
+import software.amazon.awssdk.services.bedrockagent.model.Agent;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+import javafx.util.Pair;
 
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -237,7 +242,7 @@ private static String getLlamaText(String prompt, AwsbedrockParameters awsBedroc
 }
 
 
-private static BedrockClient createBedrockClient(AwsbedrockConfiguration configuration, AwsbedrockParams awsBedrockParameters) {
+private static BedrockClient createBedrockClient(AwsbedrockConfiguration configuration, AwsbedrockAgentsParameters awsBedrockParameters) {
 
     BedrockClient bedrockClient = BedrockClient.builder()
     .region(AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion())) 
@@ -247,7 +252,7 @@ private static BedrockClient createBedrockClient(AwsbedrockConfiguration configu
     return bedrockClient;
 }
 
-private static BedrockAgentClient createBedrockAgentClient(AwsbedrockConfiguration configuration, AwsbedrockParams awsBedrockParameters) {
+private static BedrockAgentClient createBedrockAgentClient(AwsbedrockConfiguration configuration, AwsbedrockAgentsParameters awsBedrockParameters) {
 
     BedrockAgentClient bedrockAgentClient = BedrockAgentClient.builder()
     .region(AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion())) 
@@ -258,7 +263,7 @@ private static BedrockAgentClient createBedrockAgentClient(AwsbedrockConfigurati
 }
 
 
-private static BedrockAgentRuntimeClient createBedrockAgentRuntimeClient(AwsbedrockConfiguration configuration, AwsbedrockParams awsBedrockParameters) {
+private static BedrockAgentRuntimeClient createBedrockAgentRuntimeClient(AwsbedrockConfiguration configuration, AwsbedrockAgentsParameters awsBedrockParameters) {
     BedrockAgentRuntimeClient bedrockAgentRuntimeClient = BedrockAgentRuntimeClient.builder()
     .region(AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion())) 
     .credentialsProvider(StaticCredentialsProvider.create(createAwsBasicCredentials(configuration)))
@@ -268,7 +273,7 @@ private static BedrockAgentRuntimeClient createBedrockAgentRuntimeClient(Awsbedr
 }
 
 
-private static BedrockAgentRuntimeAsyncClient createBedrockAgentRuntimeAsyncClient(AwsbedrockConfiguration configuration, AwsbedrockParams awsBedrockParameters) {
+private static BedrockAgentRuntimeAsyncClient createBedrockAgentRuntimeAsyncClient(AwsbedrockConfiguration configuration, AwsbedrockAgentsParameters awsBedrockParameters) {
     BedrockAgentRuntimeAsyncClient bedrockAgentRuntimeClient = BedrockAgentRuntimeAsyncClient.builder()
     .region(AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion())) 
     .credentialsProvider(StaticCredentialsProvider.create(createAwsBasicCredentials(configuration)))
@@ -289,16 +294,43 @@ private static AwsBasicCredentials createAwsBasicCredentials(AwsbedrockConfigura
 
 
 
-private static IamClient createIamClient(AwsbedrockConfiguration configuration, AwsbedrockParams awsBedrockParameters) {
+private static IamClient createIamClient(AwsbedrockConfiguration configuration, AwsbedrockAgentsParameters awsBedrockParameters) {
     return IamClient.builder()
         .credentialsProvider(StaticCredentialsProvider.create(createAwsBasicCredentials(configuration)))
         .region(AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion()))
         .build();
 }
 
-private Role createAgentRole(String modelId, String postfix, String RolePolicyName, AwsbedrockConfiguration configuration, AwsbedrockParams awsBedrockParameters) {
+
+private Pair<String, String> requestNameAndModelFromUser(BedrockAgentRuntimeAsyncClient bedrockWrapper) {
+    List<String> existingAgentNames = bedrockWrapper.listAgents().stream()
+            .map(agent -> agent.agentName())
+            .collect(Collectors.toList());
+
+    String name;
+    while (true) {
+        name = q.ask("Enter an agent name: ", this::isValidAgentName);
+        if (!existingAgentNames.stream().anyMatch(n -> n.equalsIgnoreCase(name))) {
+            break;
+        }
+        System.out.println("Agent " + name + " conflicts with an existing agent. Please use a different name.");
+    }
+
+    List<String> models = Arrays.asList("anthropic.claude-instant-v1", "anthropic.claude-v2");
+    String modelId = models.get(q.choose("Which foundation model would you like to use? ", models));
+
+    return new Pair<>(name, modelId);
+}
+
+private boolean isValidAgentName(String name) {
+    // Add your validation logic here
+    return true;
+}
+
+
+private Role createAgentRole(String modelId, String postfix, String RolePolicyName, AwsbedrockConfiguration configuration, AwsbedrockAgentsParameters awsBedrockParameters) {
     String roleName = "AmazonBedrockExecutionRoleForAgents_" + postfix;
-    String modelArn = "arn:aws:bedrock:" + AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion()) + "::foundation-model/" + modelId + "*";
+    String modelArn = "arn:aws:bedrock:" + AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion()) + "::foundation-model/" + awsBedrockParameters + "*";
     String ROLE_POLICY_NAME = RolePolicyName;
 
     System.out.println("Creating an execution role for the agent...");
@@ -393,6 +425,10 @@ private AgentAlias createAgentAlias(String alias, String agentId, BedrockAgentCl
 
     return response.agentAlias();
 }
+
+
+
+
 
 /* 
 private void chatWithAgent(AgentAlias agentAlias, BedrockAgentRuntimeClient bedrockAgentRuntimeClient) {
