@@ -35,7 +35,12 @@ This class represents an extension configuration, values set in this class are c
 
 
 ==== Associated Operations
+* <<AGENT-create-with-alias>> {nbsp}
 * <<AGENT-define-prompt-template>> {nbsp}
+* <<AGENT-delete-by-id>> {nbsp}
+* <<AGENT-get-by-id>> {nbsp}
+* <<AGENT-get-by-name>> {nbsp}
+* <<AGENT-list>> {nbsp}
 * <<CHAT-answer-prompt>> {nbsp}
 * <<CHAT-memory-answer-prompt>> {nbsp}
 * <<CUSTOM-model-details>> {nbsp}
@@ -50,6 +55,40 @@ This class represents an extension configuration, values set in this class are c
 
 
 == Operations
+
+[[AGENT-create-with-alias]]
+=== AGENT Create With Alias
+`<aws-bedrock:agent-create-with-alias>`
+
++++
+Creates an agent with alias
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Agent Name a| String |  |  | *x*{nbsp}
+| Agent Alias a| String |  |  | *x*{nbsp}
+| Instructions a| String |  |  | *x*{nbsp}
+| Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
+| Region a| String |  |  +++us-east-1+++ | {nbsp}
+| Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
+| Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
+|======================
+
+==== Output
+[cols=".^50%,.^50%"]
+|======================
+| *Type* a| String
+|======================
+
+==== For Configurations.
+* <<aws-bedrock-configuration>> {nbsp}
+
+
 
 [[AGENT-define-prompt-template]]
 === AGENT Define Prompt Template
@@ -74,6 +113,133 @@ Helps defining an AI Agent with a prompt template
 | Top P a| Number |  |  +++0.9+++ | {nbsp}
 | Top K a| Number |  |  +++250+++ | {nbsp}
 | Max Token Count a| Number |  |  +++512+++ | {nbsp}
+| Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
+| Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
+|======================
+
+==== Output
+[cols=".^50%,.^50%"]
+|======================
+| *Type* a| String
+|======================
+
+==== For Configurations.
+* <<aws-bedrock-configuration>> {nbsp}
+
+
+
+[[AGENT-delete-by-id]]
+=== AGENT Delete By Id
+`<aws-bedrock:agent-delete-by-id>`
+
++++
+Delete agent by its Id
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Agent Id a| String |  |  | *x*{nbsp}
+| Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
+| Region a| String |  |  +++us-east-1+++ | {nbsp}
+| Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
+| Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
+|======================
+
+==== Output
+[cols=".^50%,.^50%"]
+|======================
+| *Type* a| String
+|======================
+
+==== For Configurations.
+* <<aws-bedrock-configuration>> {nbsp}
+
+
+
+[[AGENT-get-by-id]]
+=== AGENT Get By Id
+`<aws-bedrock:agent-get-by-id>`
+
++++
+Get agent by its Id
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Agent Id a| String |  |  | *x*{nbsp}
+| Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
+| Region a| String |  |  +++us-east-1+++ | {nbsp}
+| Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
+| Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
+|======================
+
+==== Output
+[cols=".^50%,.^50%"]
+|======================
+| *Type* a| String
+|======================
+
+==== For Configurations.
+* <<aws-bedrock-configuration>> {nbsp}
+
+
+
+[[AGENT-get-by-name]]
+=== AGENT Get By Name
+`<aws-bedrock:agent-get-by-name>`
+
++++
+Get agent by its Name
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Agent Name a| String |  |  | *x*{nbsp}
+| Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
+| Region a| String |  |  +++us-east-1+++ | {nbsp}
+| Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
+| Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
+|======================
+
+==== Output
+[cols=".^50%,.^50%"]
+|======================
+| *Type* a| String
+|======================
+
+==== For Configurations.
+* <<aws-bedrock-configuration>> {nbsp}
+
+
+
+[[AGENT-list]]
+=== AGENT List
+`<aws-bedrock:agent-list>`
+
++++
+Lists all agents for the configuration
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
+| Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
 | Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
 |======================

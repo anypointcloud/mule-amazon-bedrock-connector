@@ -10,8 +10,6 @@ import org.mule.extension.mulechain.internal.agents.AwsbedrockAgentsParameters;
 import software.amazon.awssdk.services.bedrockagent.model.Agent;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.Arrays;
-import javafx.util.Pair;
 
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -36,6 +34,8 @@ import software.amazon.awssdk.services.bedrock.model.ListFoundationModelsRespons
 import software.amazon.awssdk.services.bedrock.model.ValidationException;
 import software.amazon.awssdk.services.bedrockagent.BedrockAgentAsyncClient;
 import software.amazon.awssdk.services.bedrockagent.BedrockAgentClient;
+import software.amazon.awssdk.services.bedrockagent.model.DeleteAgentRequest;
+import software.amazon.awssdk.services.bedrockagent.model.DeleteAgentResponse;
 import software.amazon.awssdk.services.bedrockagentruntime.BedrockAgentRuntimeAsyncClient;
 import software.amazon.awssdk.services.bedrockagentruntime.BedrockAgentRuntimeClient;
 import software.amazon.awssdk.services.bedrockagentruntime.model.InvokeAgentRequest;
@@ -44,9 +44,12 @@ import software.amazon.awssdk.services.bedrockagentruntime.model.InvokeAgentResp
 import software.amazon.awssdk.services.iam.IamClient;
 import software.amazon.awssdk.services.iam.model.CreateRoleRequest;
 import software.amazon.awssdk.services.iam.model.CreateRoleResponse;
+import software.amazon.awssdk.services.iam.model.GetRoleRequest;
+import software.amazon.awssdk.services.iam.model.GetRoleResponse;
 import software.amazon.awssdk.services.iam.model.PutRolePolicyRequest;
 import software.amazon.awssdk.services.iam.model.Role;
 import software.amazon.awssdk.services.iam.model.IamException;
+import software.amazon.awssdk.services.iam.model.NoSuchEntityException;
 import software.amazon.awssdk.services.iam.IamClient;
 import software.amazon.awssdk.services.bedrockagent.BedrockAgentClient;
 import software.amazon.awssdk.services.bedrockagent.model.CreateAgentRequest;
@@ -59,6 +62,10 @@ import software.amazon.awssdk.services.bedrockagent.model.PrepareAgentRequest;
 import software.amazon.awssdk.services.bedrockagent.model.PrepareAgentResponse;
 import software.amazon.awssdk.services.bedrockagent.model.Agent;
 import software.amazon.awssdk.services.bedrockagent.model.AgentAlias;
+import software.amazon.awssdk.services.bedrockagent.BedrockAgentClient;
+import software.amazon.awssdk.services.bedrockagent.model.GetAgentRequest;
+import software.amazon.awssdk.services.bedrockagent.model.GetAgentResponse;
+import software.amazon.awssdk.services.bedrockagent.model.Agent;
 import software.amazon.awssdk.services.bedrockagent.model.AgentStatus;
 import software.amazon.awssdk.services.bedrockagent.model.AgentSummary;
 import software.amazon.awssdk.services.bedrockagent.model.CreateAgentAliasRequest;
@@ -74,7 +81,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.Scanner;
-
+import software.amazon.awssdk.services.bedrockagent.BedrockAgentClient;
+import software.amazon.awssdk.services.bedrockagent.model.ListAgentsRequest;
+import software.amazon.awssdk.services.bedrockagent.model.ListAgentsResponse;
+import software.amazon.awssdk.services.bedrockagent.model.AgentSummary;
+import software.amazon.awssdk.services.bedrockagent.model.Agent;
+import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.nio.charset.StandardCharsets;
@@ -212,7 +225,7 @@ private static String getLlamaText(String prompt, AwsbedrockParameters awsBedroc
   }
 
 
-  public static String invokeModel(String prompt, AwsbedrockConfiguration configuration, AwsbedrockParameters awsBedrockParameters) {
+  private static String invokeModel(String prompt, AwsbedrockConfiguration configuration, AwsbedrockParameters awsBedrockParameters) {
 
     // Create Bedrock Client 
     BedrockRuntimeClient client = InitiateClient(configuration, awsBedrockParameters);
@@ -306,7 +319,13 @@ private static IamClient createIamClient(AwsbedrockConfiguration configuration, 
 }
 
 
-private String getAgentNames(BedrockAgentClient bedrockagent) {
+public static String ListAgents(AwsbedrockConfiguration configuration, AwsbedrockAgentsParameters awsBedrockParameters){
+    BedrockAgentClient bedrockAgent = createBedrockAgentClient(configuration, awsBedrockParameters);
+    String listOfAgents = getAgentNames(bedrockAgent);
+    return listOfAgents;
+}
+
+private static String getAgentNames(BedrockAgentClient bedrockagent) {
         // Build a ListAgentsRequest instance without any filter criteria
         ListAgentsRequest listAgentsRequest = ListAgentsRequest.builder().build();
 
@@ -326,38 +345,141 @@ private String getAgentNames(BedrockAgentClient bedrockagent) {
 
 }
 
-private Role createAgentRole(String modelId, String postfix, String RolePolicyName, AwsbedrockConfiguration configuration, AwsbedrockAgentsParameters awsBedrockParameters) {
+
+private static Agent getAgentById(String agentId, BedrockAgentClient bedrockAgentClient) {
+    // Build a GetAgentRequest instance with the agent ID
+    GetAgentRequest getAgentRequest = GetAgentRequest.builder()
+            .agentId(agentId)
+            .build();
+
+    // Call the getAgent method of the BedrockAgentClient instance
+    GetAgentResponse getAgentResponse = bedrockAgentClient.getAgent(getAgentRequest);
+
+    // Retrieve the agent from the GetAgentResponse instance
+    Agent agent = getAgentResponse.agent();
+
+    return agent;
+}
+
+public static String getAgentbyAgentId(String agentId, AwsbedrockConfiguration configuration, AwsbedrockAgentsParameters awsBedrockParameters){
+    BedrockAgentClient bedrockAgent = createBedrockAgentClient(configuration, awsBedrockParameters);
+    String agentInfo = getAgentById(agentId, bedrockAgent).toString();
+    return agentInfo;
+}
+
+
+private static Optional<Agent> getAgentByName(String agentName, BedrockAgentClient bedrockAgentClient) {
+    // Build a ListAgentsRequest instance without any filter criteria
+    ListAgentsRequest listAgentsRequest = ListAgentsRequest.builder()
+            .build();
+
+    // Call the listAgents method of the BedrockAgentClient instance
+    ListAgentsResponse listAgentsResponse = bedrockAgentClient.listAgents(listAgentsRequest);
+
+    // Retrieve the list of agent summaries from the ListAgentsResponse instance
+    List<AgentSummary> agentSummaries = listAgentsResponse.agentSummaries();
+
+    // Iterate through the list of agent summaries to find the one with the specified name
+    for (AgentSummary agentSummary : agentSummaries) {
+        if (agentSummary.agentName().equals(agentName)) {
+            // Retrieve the agent ID from the agent summary
+            String agentId = agentSummary.agentId();
+
+            // Build a GetAgentRequest instance with the agent ID
+            GetAgentRequest getAgentRequest = GetAgentRequest.builder()
+                    .agentId(agentId)
+                    .build();
+
+            // Call the getAgent method of the BedrockAgentClient instance
+            GetAgentResponse getAgentResponse = bedrockAgentClient.getAgent(getAgentRequest);
+
+            // Retrieve the agent from the GetAgentResponse instance
+            Agent agent = getAgentResponse.agent();
+
+            // Return the agent as an Optional object
+            return Optional.of(agent);
+        }
+    }
+
+    // No agent with the specified name was found
+    return Optional.empty();
+}
+
+public static String getAgentbyAgentName(String agentName, AwsbedrockConfiguration configuration, AwsbedrockAgentsParameters awsBedrockParameters){
+    String agentInfo = "";
+    BedrockAgentClient bedrockAgent = createBedrockAgentClient(configuration, awsBedrockParameters);
+    Optional<Agent> optionalAgent = getAgentByName(agentName, bedrockAgent);
+    if (optionalAgent.isPresent()) {
+        agentInfo = optionalAgent.toString();
+    } else {
+        agentInfo = "No Agent found!";
+    }
+    return agentInfo;
+}
+
+
+public static String createAgentOperation(String name, String agentAlias, String instruction, AwsbedrockConfiguration configuration, AwsbedrockAgentsParameters awsBedrockParameter){
+    String postfix = "mule";
+    String RolePolicyName = "agent_permissions";
+
+    BedrockAgentClient bedrockAgent = createBedrockAgentClient(configuration, awsBedrockParameter);
+
+    Role agentRole = createAgentRole(postfix, RolePolicyName, configuration, awsBedrockParameter);
+
+    Agent agent = createAgent(name, instruction, awsBedrockParameter.getModelName(),agentRole, bedrockAgent);
+
+
+    PrepareAgentResponse agentDetails = prepareAgent(agent.agentId(), bedrockAgent);
+
+    //AgentAlias AgentAlias = createAgentAlias(name, agent.agentId(),bedrockAgent);
+
+    return agentDetails.toString();
+}
+
+
+
+private static Role createAgentRole(String postfix, String RolePolicyName, AwsbedrockConfiguration configuration, AwsbedrockAgentsParameters awsBedrockParameters) {
     String roleName = "AmazonBedrockExecutionRoleForAgents_" + postfix;
-    String modelArn = "arn:aws:bedrock:" + AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion()) + "::foundation-model/" + awsBedrockParameters + "*";
+    String modelArn = "arn:aws:bedrock:" + awsBedrockParameters.getRegion() + "::foundation-model/" + awsBedrockParameters.getModelName() + "*";
     String ROLE_POLICY_NAME = RolePolicyName;
 
     System.out.println("Creating an execution role for the agent...");
 
     // Create an IAM client
     IamClient iamClient = createIamClient(configuration, awsBedrockParameters);
+    // Check if the role exists
+    Role agentRole = null;
     try {
-        CreateRoleResponse createRoleResponse = iamClient.createRole(CreateRoleRequest.builder()
-                .roleName(roleName)
-                .assumeRolePolicyDocument("{\"Version\": \"2012-10-17\",\"Statement\": [{\"Effect\": \"Allow\",\"Principal\": {\"Service\": \"bedrock.amazonaws.com\"},\"Action\": \"sts:AssumeRole\"}]}")
-                .build());
+        GetRoleResponse getRoleResponse = iamClient.getRole(GetRoleRequest.builder().roleName(roleName).build());
+        agentRole = getRoleResponse.role();
+        System.out.println("Role already exists: " + agentRole.arn());
+    } catch (NoSuchEntityException e) {
+        // Role does not exist, create it
+        try {
+            CreateRoleResponse createRoleResponse = iamClient.createRole(CreateRoleRequest.builder()
+                    .roleName(roleName)
+                    .assumeRolePolicyDocument("{\"Version\": \"2012-10-17\",\"Statement\": [{\"Effect\": \"Allow\",\"Principal\": {\"Service\": \"bedrock.amazonaws.com\"},\"Action\": \"sts:AssumeRole\"}]}")
+                    .build());
 
-        iamClient.putRolePolicy(PutRolePolicyRequest.builder()
-                .roleName(roleName)
-                .policyName(ROLE_POLICY_NAME)
-                .policyDocument("{\"Version\": \"2012-10-17\",\"Statement\": [{\"Effect\": \"Allow\",\"Action\": \"bedrock:InvokeModel\",\"Resource\": \"" + modelArn + "\"}]}")
-                .build());
+            iamClient.putRolePolicy(PutRolePolicyRequest.builder()
+                    .roleName(roleName)
+                    .policyName(ROLE_POLICY_NAME)
+                    .policyDocument("{\"Version\": \"2012-10-17\",\"Statement\": [{\"Effect\": \"Allow\",\"Action\": \"bedrock:InvokeModel\",\"Resource\": \"" + modelArn + "\"}]}")
+                    .build());
 
-        return Role.builder()
-                .roleName(roleName)
-                .arn(createRoleResponse.role().arn())
-                .build();
-    } catch (IamException e) {
-        System.out.println("Couldn't create role " + roleName + ". Here's why: " + e.getMessage());
-        throw e;
+            agentRole = Role.builder()
+                    .roleName(roleName)
+                    .arn(createRoleResponse.role().arn())
+                    .build();
+        } catch (IamException ex) {
+            System.out.println("Couldn't create role " + roleName + ". Here's why: " + ex.getMessage());
+            throw ex;
+        }
     }
+    return agentRole;
 }
 
-private Agent createAgent(String name, String instruction, String modelId, Role agentRole, BedrockAgentClient bedrockAgentClient) {
+private static Agent createAgent(String name, String instruction, String modelId, Role agentRole, BedrockAgentClient bedrockAgentClient) {
     System.out.println("Creating the agent...");
 
     //String instruction = "You are a friendly chat bot. You have access to a function called that returns information about the current date and time. When responding with date or time, please make sure to add the timezone UTC.";
@@ -374,11 +496,14 @@ private Agent createAgent(String name, String instruction, String modelId, Role 
 }
 
 
-private void waitForAgentStatus(String agentId, String status, BedrockAgentClient bedrockAgentClient) {
+private static void waitForAgentStatus(String agentId, String status, BedrockAgentClient bedrockAgentClient) {
     while (true) {
         GetAgentResponse response = bedrockAgentClient.getAgent(GetAgentRequest.builder()
                 .agentId(agentId)
                 .build());
+        
+        //System.out.println("Status: " + status);
+        //System.out.println("response.agent.agentStatus: " + response.agent().agentStatus().toString());
 
         if (response.agent().agentStatus().toString().equals(status)) {
 
@@ -396,7 +521,7 @@ private void waitForAgentStatus(String agentId, String status, BedrockAgentClien
 
 
 
-private PrepareAgentResponse prepareAgent(String agentId, BedrockAgentClient bedrockAgentClient) {
+private static PrepareAgentResponse prepareAgent(String agentId, BedrockAgentClient bedrockAgentClient) {
     System.out.println("Preparing the agent...");
 
     //String agentId = agent.agentId();
@@ -409,8 +534,9 @@ private PrepareAgentResponse prepareAgent(String agentId, BedrockAgentClient bed
 }
 
 
-private AgentAlias createAgentAlias(String alias, String agentId, BedrockAgentClient bedrockAgentClient) {
-    System.out.println("Creating an agent alias...");
+private static AgentAlias createAgentAlias(String alias, String agentId, BedrockAgentClient bedrockAgentClient) {
+    System.out.println("Creating an agent alias...");    
+    System.out.println("agentId: " + agentId);
     CreateAgentAliasRequest request = CreateAgentAliasRequest.builder()
             .agentId(agentId)
             .agentAliasName(alias)
@@ -425,7 +551,25 @@ private AgentAlias createAgentAlias(String alias, String agentId, BedrockAgentCl
 }
 
 
+public static String deleteAgentByAgentId(String agentId, AwsbedrockConfiguration configuration, AwsbedrockAgentsParameters awsBedrockParameters){
+    BedrockAgentClient bedrockAgent = createBedrockAgentClient(configuration, awsBedrockParameters);
+    String agentInfo = deleteAgentById(agentId, bedrockAgent);
+    return agentInfo;
+}
 
+
+private static String deleteAgentById(String agentId, BedrockAgentClient bedrockAgentClient) {
+    // Build a DeleteAgentRequest instance with the agent ID
+    DeleteAgentRequest deleteAgentRequest = DeleteAgentRequest.builder()
+            .agentId(agentId)
+            .build();
+
+    // Call the deleteAgent method of the BedrockAgentClient instance
+    DeleteAgentResponse deleteAgentResponse = bedrockAgentClient.deleteAgent(deleteAgentRequest);
+
+    // Print a message indicating that the agent was deleted successfully
+    return deleteAgentResponse.toString();
+}
 
 
 /* 
