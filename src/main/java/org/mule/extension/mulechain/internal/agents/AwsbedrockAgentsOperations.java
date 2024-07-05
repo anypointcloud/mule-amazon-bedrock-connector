@@ -112,8 +112,8 @@ public class AwsbedrockAgentsOperations {
    */
   @MediaType(value = ANY, strict = false)
   @Alias("AGENT-chat")
-  public String chatWithAgent(String agentId, String agentAliasName, String prompt, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockAgentsParameters awsBedrockParameters){
-      String response = AwsbedrockAgentsPayloadHelper.chatWithAgent(agentAliasName, agentId, prompt, configuration, awsBedrockParameters);
+  public String chatWithAgent(String agentId, String agentAliasId, String prompt, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockAgentsParameters awsBedrockParameters){
+      String response = AwsbedrockAgentsPayloadHelper.chatWithAgent(agentAliasId, agentId, prompt, configuration, awsBedrockParameters);
     return response;
   }
   
