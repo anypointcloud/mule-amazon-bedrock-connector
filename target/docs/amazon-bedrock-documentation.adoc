@@ -35,9 +35,13 @@ This class represents an extension configuration, values set in this class are c
 
 
 ==== Associated Operations
-* <<AGENT-create-with-alias>> {nbsp}
+* <<AGENT-chat>> {nbsp}
+* <<AGENT-create>> {nbsp}
+* <<AGENT-create-alias>> {nbsp}
 * <<AGENT-define-prompt-template>> {nbsp}
+* <<AGENT-delete-agent-aliases>> {nbsp}
 * <<AGENT-delete-by-id>> {nbsp}
+* <<AGENT-get-alias-by-agent-id>> {nbsp}
 * <<AGENT-get-by-id>> {nbsp}
 * <<AGENT-get-by-name>> {nbsp}
 * <<AGENT-list>> {nbsp}
@@ -56,9 +60,43 @@ This class represents an extension configuration, values set in this class are c
 
 == Operations
 
-[[AGENT-create-with-alias]]
-=== AGENT Create With Alias
-`<aws-bedrock:agent-create-with-alias>`
+[[AGENT-chat]]
+=== AGENT Chat
+`<aws-bedrock:agent-chat>`
+
++++
+Chat with an agent
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Agent Id a| String |  |  | *x*{nbsp}
+| Agent Alias Name a| String |  |  | *x*{nbsp}
+| Prompt a| String |  |  | *x*{nbsp}
+| Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
+| Region a| String |  |  +++us-east-1+++ | {nbsp}
+| Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
+| Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
+|======================
+
+==== Output
+[cols=".^50%,.^50%"]
+|======================
+| *Type* a| String
+|======================
+
+==== For Configurations.
+* <<aws-bedrock-configuration>> {nbsp}
+
+
+
+[[AGENT-create]]
+=== AGENT Create
+`<aws-bedrock:agent-create>`
 
 +++
 Creates an agent with alias
@@ -70,8 +108,40 @@ Creates an agent with alias
 | Name | Type | Description | Default Value | Required
 | Configuration | String | The name of the configuration to use. | | *x*{nbsp}
 | Agent Name a| String |  |  | *x*{nbsp}
-| Agent Alias a| String |  |  | *x*{nbsp}
 | Instructions a| String |  |  | *x*{nbsp}
+| Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
+| Region a| String |  |  +++us-east-1+++ | {nbsp}
+| Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
+| Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
+|======================
+
+==== Output
+[cols=".^50%,.^50%"]
+|======================
+| *Type* a| String
+|======================
+
+==== For Configurations.
+* <<aws-bedrock-configuration>> {nbsp}
+
+
+
+[[AGENT-create-alias]]
+=== AGENT Create Alias
+`<aws-bedrock:agent-create-alias>`
+
++++
+Creates an agent alias
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Agent Alias a| String |  |  | *x*{nbsp}
+| Agent Id a| String |  |  | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
@@ -128,12 +198,77 @@ Helps defining an AI Agent with a prompt template
 
 
 
+[[AGENT-delete-agent-aliases]]
+=== AGENT Delete Agent Aliases
+`<aws-bedrock:agent-delete-agent-aliases>`
+
++++
+Get agent alias by its Id
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Agent Id a| String |  |  | *x*{nbsp}
+| Agent Alias Name a| String |  |  | *x*{nbsp}
+| Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
+| Region a| String |  |  +++us-east-1+++ | {nbsp}
+| Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
+| Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
+|======================
+
+==== Output
+[cols=".^50%,.^50%"]
+|======================
+| *Type* a| String
+|======================
+
+==== For Configurations.
+* <<aws-bedrock-configuration>> {nbsp}
+
+
+
 [[AGENT-delete-by-id]]
 === AGENT Delete By Id
 `<aws-bedrock:agent-delete-by-id>`
 
 +++
 Delete agent by its Id
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Agent Id a| String |  |  | *x*{nbsp}
+| Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
+| Region a| String |  |  +++us-east-1+++ | {nbsp}
+| Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
+| Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
+|======================
+
+==== Output
+[cols=".^50%,.^50%"]
+|======================
+| *Type* a| String
+|======================
+
+==== For Configurations.
+* <<aws-bedrock-configuration>> {nbsp}
+
+
+
+[[AGENT-get-alias-by-agent-id]]
+=== AGENT Get Alias By Agent Id
+`<aws-bedrock:agent-get-alias-by-agent-id>`
+
++++
+Get agent alias by its Id
 +++
 
 ==== Parameters

@@ -22,16 +22,68 @@
         <parameters/>
     </extension>
     <operations>
-        <operation name="AGENT-create-with-alias">
+        <operation name="AGENT-chat">
+            <description><![CDATA[Chat with an agent]]></description>
+            <parameters>
+                <parameter name="agentId">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="agentAliasName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="prompt">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="outputMimeType">
+                    <description><![CDATA[The mime type of the payload that this operation outputs.]]></description>
+                </parameter>
+                <parameter name="modelName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="region">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="AGENT-create">
             <description><![CDATA[Creates an agent with alias]]></description>
             <parameters>
                 <parameter name="agentName">
                     <description><![CDATA[]]></description>
                 </parameter>
+                <parameter name="instructions">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="outputMimeType">
+                    <description><![CDATA[The mime type of the payload that this operation outputs.]]></description>
+                </parameter>
+                <parameter name="modelName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="region">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="AGENT-create-alias">
+            <description><![CDATA[Creates an agent alias]]></description>
+            <parameters>
                 <parameter name="agentAlias">
                     <description><![CDATA[]]></description>
                 </parameter>
-                <parameter name="instructions">
+                <parameter name="agentId">
                     <description><![CDATA[]]></description>
                 </parameter>
                 <parameter name="outputMimeType">
@@ -92,8 +144,57 @@
                 </parameter>
             </parameters>
         </operation>
+        <operation name="AGENT-delete-agent-aliases">
+            <description><![CDATA[Get agent alias by its Id]]></description>
+            <parameters>
+                <parameter name="agentId">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="agentAliasName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="outputMimeType">
+                    <description><![CDATA[The mime type of the payload that this operation outputs.]]></description>
+                </parameter>
+                <parameter name="modelName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="region">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+            </parameters>
+        </operation>
         <operation name="AGENT-delete-by-id">
             <description><![CDATA[Delete agent by its Id]]></description>
+            <parameters>
+                <parameter name="agentId">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="outputMimeType">
+                    <description><![CDATA[The mime type of the payload that this operation outputs.]]></description>
+                </parameter>
+                <parameter name="modelName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="region">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="AGENT-get-alias-by-agent-id">
+            <description><![CDATA[Get agent alias by its Id]]></description>
             <parameters>
                 <parameter name="agentId">
                     <description><![CDATA[]]></description>

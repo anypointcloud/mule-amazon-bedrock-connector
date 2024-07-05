@@ -38,6 +38,7 @@ public class AwsbedrockAgentsOperations {
     return response;
   }
 
+  
 
   /**
    * Get agent by its Name
@@ -66,12 +67,55 @@ public class AwsbedrockAgentsOperations {
    * Creates an agent with alias
    */
   @MediaType(value = ANY, strict = false)
-  @Alias("AGENT-create-with-alias")
-  public String createAgentWithAlias(String agentName, String agentAlias, String instructions, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockAgentsParameters awsBedrockParameters){
-      String response = AwsbedrockAgentsPayloadHelper.createAgentOperation(agentName, agentAlias, instructions, configuration, awsBedrockParameters);
+  @Alias("AGENT-create")
+  public String createAgentWithAlias(String agentName, String instructions, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockAgentsParameters awsBedrockParameters){
+      String response = AwsbedrockAgentsPayloadHelper.createAgentOperation(agentName, instructions, configuration, awsBedrockParameters);
     return response;
   }
 
+  /**
+   * Creates an agent alias
+   */
+  @MediaType(value = ANY, strict = false)
+  @Alias("AGENT-create-alias")
+  public String createAgentAlias(String agentAlias, String agentId, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockAgentsParameters awsBedrockParameters){
+      String response = AwsbedrockAgentsPayloadHelper.createAgentAlias(agentAlias, agentId, configuration, awsBedrockParameters);
+    return response;
+  }
+
+
+
+  /**
+   * Get agent alias by its Id
+   */
+  @MediaType(value = ANY, strict = false)
+  @Alias("AGENT-get-alias-by-agent-id")
+  public String getAgentAliasById(String agentId, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockAgentsParameters awsBedrockParameters){
+      String response = AwsbedrockAgentsPayloadHelper.listAllAgentAliases(agentId, configuration, awsBedrockParameters);
+    return response;
+  }
+
+
+   /**
+   * Get agent alias by its Id
+   */
+  @MediaType(value = ANY, strict = false)
+  @Alias("AGENT-delete-agent-aliases")
+  public String deleteAgentAlias(String agentId, String agentAliasName, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockAgentsParameters awsBedrockParameters){
+      String response = AwsbedrockAgentsPayloadHelper.deleteAgentAliasesByAgentId(agentId, agentAliasName, configuration, awsBedrockParameters);
+    return response;
+  }
+
+
+   /**
+   * Chat with an agent
+   */
+  @MediaType(value = ANY, strict = false)
+  @Alias("AGENT-chat")
+  public String chatWithAgent(String agentId, String agentAliasName, String prompt, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockAgentsParameters awsBedrockParameters){
+      String response = AwsbedrockAgentsPayloadHelper.chatWithAgent(agentAliasName, agentId, prompt, configuration, awsBedrockParameters);
+    return response;
+  }
   
 
 }
