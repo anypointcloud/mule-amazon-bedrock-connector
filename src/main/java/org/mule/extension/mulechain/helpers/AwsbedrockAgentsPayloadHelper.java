@@ -764,16 +764,24 @@ private void chatWithAgent(AgentAlias agentAlias, BedrockAgentRuntimeClient bedr
 public static String chatWithAgent(String agentAlias, String agentId, String prompt, AwsbedrockConfiguration configuration, AwsbedrockAgentsParameters awsBedrockParameters){
     BedrockAgentRuntimeAsyncClient bedrockAgent = createBedrockAgentRuntimeAsyncClient(configuration, awsBedrockParameters);
     String sessionId = UUID.randomUUID().toString();
-    CompletableFuture<String> completableFuture=null;
+    //CompletableFuture<String> completableFuture=null;
+    String response = "";
     try {
-        completableFuture = invokeAgent(agentAlias, agentId, prompt, sessionId, bedrockAgent);
+        //completableFuture = invokeAgent(agentAlias, agentId, prompt, sessionId, bedrockAgent);
+        /*invokeAgent(agentAlias, agentId, prompt, sessionId, bedrockAgent).thenAccept(response -> {
+            System.out.println(response);
+        });*/
+
+        response = invokeAgent(agentAlias, agentId, prompt, sessionId, bedrockAgent).get();
+        System.out.println(response);
+
     } catch (InterruptedException | ExecutionException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
         System.out.println(e.getMessage());
     }
 
-    return completableFuture.toString();
+    return response.substring(4);
 }
 
 private static CompletableFuture<String> invokeAgent(String agentAlias, String agentId, String prompt, String sessionId, BedrockAgentRuntimeAsyncClient bedrockAgentRuntimeAsyncClient) throws InterruptedException, ExecutionException {

@@ -28,7 +28,7 @@
                 <parameter name="agentId">
                     <description><![CDATA[]]></description>
                 </parameter>
-                <parameter name="agentAliasName">
+                <parameter name="agentAliasId">
                     <description><![CDATA[]]></description>
                 </parameter>
                 <parameter name="prompt">
