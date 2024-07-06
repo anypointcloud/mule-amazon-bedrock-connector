@@ -31,7 +31,7 @@ public class AwsbedrockEmbeddingOperations {
   }
 
   /**
-   * Generate embeddings for text
+   * Performs retrieval augmented generation based on files
    * @throws TikaException 
    * @throws SAXException 
    * @throws IOException 

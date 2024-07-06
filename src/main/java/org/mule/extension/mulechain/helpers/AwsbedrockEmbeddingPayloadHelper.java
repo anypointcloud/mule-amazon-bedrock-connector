@@ -270,7 +270,10 @@ public static String InvokeAdhocRAG(String prompt, String filePath, AwsbedrockCo
             // Rank and print results
             List<String> results = rankAndPrintResults(corpus, similarityScores);
 
-            return results.toString();
+            // Convert results list to a JSONArray
+            JSONArray jsonArray = new JSONArray(results);
+
+            return jsonArray.toString();
 
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
@@ -311,6 +314,8 @@ public static String InvokeAdhocRAG(String prompt, String filePath, AwsbedrockCo
             System.out.println("Score: " + similarityScores.get(index) + " - Text: " + corpus.get(index));
             results.add(similarityScores.get(index) + " - " + corpus.get(index));
         }
+
+         
         return results;
     }
 
