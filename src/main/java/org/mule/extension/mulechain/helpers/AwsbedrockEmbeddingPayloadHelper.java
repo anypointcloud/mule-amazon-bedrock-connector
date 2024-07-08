@@ -257,7 +257,8 @@ public static String InvokeAdhocRAG(String prompt, String filePath, AwsbedrockCo
                 corpusBody = identifyPayloadDoc(text, awsBedrockParameters); 
                 //System.out.println(corpusBody);
                 if (text != null && !text.isEmpty()) {
-                    corpusEmbeddings.add(generateEmbedding(modelId, corpusBody, configuration, region).getJSONArray("embedding"));
+                    body = identifyPayloadDoc(corpusBody, awsBedrockParameters);
+                    corpusEmbeddings.add(generateEmbedding(modelId, body, configuration, region).getJSONArray("embedding"));
                 }
             }
 
