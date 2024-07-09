@@ -665,7 +665,7 @@ Generates an image based on text.
 `<aws-bedrock:rag-embedding-text-score>`
 
 +++
-Generate embeddings for text
+Performs retrieval augmented generation based on files
 +++
 
 ==== Parameters
