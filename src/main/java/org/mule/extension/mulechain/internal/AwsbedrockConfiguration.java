@@ -1,6 +1,7 @@
 package org.mule.extension.mulechain.internal;
 
 import org.mule.runtime.extension.api.annotation.Operations;
+import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 import org.mule.extension.mulechain.internal.agents.AwsbedrockAgentsOperations;
 import org.mule.extension.mulechain.internal.embeddings.AwsbedrockEmbeddingOperations;
@@ -28,12 +29,22 @@ public class AwsbedrockConfiguration {
   @Parameter
   private String awsSecretAccessKey;
 
+
+  @Parameter
+  @Optional
+  private String awsSessionToken;
+
+
   public String getAwsAccessKeyId(){
     return awsAccessKeyId;
   }
 
   public String getAwsSecretAccessKey(){
     return awsSecretAccessKey;
+  }
+
+  public String getAwsSessionToken(){
+    return awsSessionToken;
   }
 
 }
