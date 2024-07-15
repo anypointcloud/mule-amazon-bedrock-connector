@@ -24,6 +24,8 @@ import org.apache.tika.parser.pdf.*;
 import org.apache.tika.sax.BodyContentHandler;
 
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.AwsCredentials;
+import software.amazon.awssdk.auth.credentials.AwsSessionCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.regions.Region;
@@ -170,8 +172,21 @@ private static String getCoherEmbeddingModelDoc(String prompt, AwsbedrockParamet
 private static BedrockRuntimeClient createClient(AwsbedrockConfiguration configuration, Region region) {
 
     // Initialize the AWS credentials
-    AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(configuration.getAwsAccessKeyId(), configuration.getAwsSecretAccessKey());
+    //AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(configuration.getAwsAccessKeyId(), configuration.getAwsSecretAccessKey());
 
+    AwsCredentials awsCredentials;
+
+    if (configuration.getAwsSessionToken() == null || configuration.getAwsSessionToken().isEmpty()) {
+        awsCredentials = AwsBasicCredentials.create(
+            configuration.getAwsAccessKeyId(), 
+            configuration.getAwsSecretAccessKey()
+        );
+    } else {
+        awsCredentials = AwsSessionCredentials.create(
+            configuration.getAwsAccessKeyId(), 
+            configuration.getAwsSecretAccessKey(), 
+            configuration.getAwsSessionToken());
+    }
 
 
     return BedrockRuntimeClient.builder()

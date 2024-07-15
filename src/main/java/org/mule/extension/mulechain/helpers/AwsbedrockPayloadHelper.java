@@ -8,6 +8,8 @@ import org.mule.extension.mulechain.internal.AwsbedrockParams;
 import org.mule.extension.mulechain.internal.AwsbedrockParamsModelDetails;
 
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.AwsCredentials;
+import software.amazon.awssdk.auth.credentials.AwsSessionCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.core.exception.SdkClientException;
@@ -37,6 +39,15 @@ public class AwsbedrockPayloadHelper {
     .region(region)
     .build();
   }
+
+
+  private static BedrockRuntimeClient createClientSession(AwsSessionCredentials awsCreds, Region region) {
+    return BedrockRuntimeClient.builder()
+    .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
+    .region(region)
+    .build();
+  }
+
 
   private static InvokeModelRequest createInvokeRequest(String modelId, String nativeRequest) {
     return InvokeModelRequest.builder()
@@ -221,10 +232,17 @@ private static String getLlamaText(String prompt, AwsbedrockParameters awsBedroc
 
   private static BedrockRuntimeClient InitiateClient(AwsbedrockConfiguration configuration, AwsbedrockParameters awsBedrockParameters){
         // Initialize the AWS credentials
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(configuration.getAwsAccessKeyId(), configuration.getAwsSecretAccessKey());
-        // Create Bedrock Client 
-        return createClient(awsCreds, getRegion(awsBedrockParameters.getRegion()));
+        //AwsCredentials awsCredentials;
 
+        //AwsBasicCredentials awsCreds = AwsBasicCredentials.create(configuration.getAwsAccessKeyId(), configuration.getAwsSecretAccessKey());
+        if (configuration.getAwsSessionToken() == null || configuration.getAwsSessionToken().isEmpty()) {
+            AwsBasicCredentials awsCredsBasic = AwsBasicCredentials.create(configuration.getAwsAccessKeyId(), configuration.getAwsSecretAccessKey());
+            return createClient(awsCredsBasic, getRegion(awsBedrockParameters.getRegion()));
+        } else {
+            AwsSessionCredentials awsCredsSession = AwsSessionCredentials.create(configuration.getAwsAccessKeyId(), configuration.getAwsSecretAccessKey(), configuration.getAwsSessionToken());
+            return createClientSession(awsCredsSession, getRegion(awsBedrockParameters.getRegion()));
+        }
+        
   }
 
 
@@ -263,10 +281,19 @@ private static String getLlamaText(String prompt, AwsbedrockParameters awsBedroc
 
 
 private static BedrockClient createBedrockClient(AwsbedrockConfiguration configuration, AwsbedrockParams awsBedrockParameters) {
-    AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(
-        configuration.getAwsAccessKeyId(), 
-        configuration.getAwsSecretAccessKey()
-    );
+    AwsCredentials awsCredentials;
+
+    if (configuration.getAwsSessionToken() == null || configuration.getAwsSessionToken().isEmpty()) {
+        awsCredentials = AwsBasicCredentials.create(
+            configuration.getAwsAccessKeyId(), 
+            configuration.getAwsSecretAccessKey()
+        );
+    } else {
+        awsCredentials = AwsSessionCredentials.create(
+            configuration.getAwsAccessKeyId(), 
+            configuration.getAwsSecretAccessKey(), 
+            configuration.getAwsSessionToken());
+    }
 
     BedrockClient bedrockClient = BedrockClient.builder()
     .region(getRegion(awsBedrockParameters.getRegion())) 
@@ -278,10 +305,19 @@ private static BedrockClient createBedrockClient(AwsbedrockConfiguration configu
 
 
 private static BedrockClient createBedrockClientDetails(AwsbedrockConfiguration configuration, AwsbedrockParamsModelDetails awsBedrockParameters) {
-    AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(
-        configuration.getAwsAccessKeyId(), 
-        configuration.getAwsSecretAccessKey()
-    );
+    AwsCredentials awsCredentials;
+
+    if (configuration.getAwsSessionToken() == null || configuration.getAwsSessionToken().isEmpty()) {
+        awsCredentials = AwsBasicCredentials.create(
+            configuration.getAwsAccessKeyId(), 
+            configuration.getAwsSecretAccessKey()
+        );
+    } else {
+        awsCredentials = AwsSessionCredentials.create(
+            configuration.getAwsAccessKeyId(), 
+            configuration.getAwsSecretAccessKey(), 
+            configuration.getAwsSessionToken());
+    }
 
     BedrockClient bedrockClient = BedrockClient.builder()
     .region(getRegion(awsBedrockParameters.getRegion())) 

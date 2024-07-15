@@ -23,6 +23,8 @@ import java.util.concurrent.ExecutionException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.AwsCredentials;
+import software.amazon.awssdk.auth.credentials.AwsSessionCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.regions.Region;
@@ -88,6 +90,13 @@ import java.util.function.Consumer;
 public class AwsbedrockAgentsPayloadHelper {
 
   private static BedrockRuntimeClient createClient(AwsBasicCredentials awsCreds, Region region) {
+    return BedrockRuntimeClient.builder()
+    .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
+    .region(region)
+    .build();
+  }
+
+  private static BedrockRuntimeClient createClientSession(AwsSessionCredentials awsCreds, Region region) {
     return BedrockRuntimeClient.builder()
     .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
     .region(region)
@@ -209,9 +218,16 @@ private static String getLlamaText(String prompt, AwsbedrockParameters awsBedroc
 
   private static BedrockRuntimeClient InitiateClient(AwsbedrockConfiguration configuration, AwsbedrockParameters awsBedrockParameters){
         // Initialize the AWS credentials
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(configuration.getAwsAccessKeyId(), configuration.getAwsSecretAccessKey());
+        //AwsBasicCredentials awsCreds = AwsBasicCredentials.create(configuration.getAwsAccessKeyId(), configuration.getAwsSecretAccessKey());
         // Create Bedrock Client 
-        return createClient(awsCreds, AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion()));
+        //return createClient(awsCreds, AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion()));
+        if (configuration.getAwsSessionToken() == null || configuration.getAwsSessionToken().isEmpty()) {
+            AwsBasicCredentials awsCredsBasic = AwsBasicCredentials.create(configuration.getAwsAccessKeyId(), configuration.getAwsSecretAccessKey());
+            return createClient(awsCredsBasic, AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion()));
+        } else {
+            AwsSessionCredentials awsCredsSession = AwsSessionCredentials.create(configuration.getAwsAccessKeyId(), configuration.getAwsSecretAccessKey(), configuration.getAwsSessionToken());
+            return createClientSession(awsCredsSession, AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion()));
+        }
 
   }
 
@@ -292,12 +308,20 @@ private static BedrockAgentRuntimeAsyncClient createBedrockAgentRuntimeAsyncClie
 
 
 
-private static AwsBasicCredentials createAwsBasicCredentials(AwsbedrockConfiguration configuration){
-    return AwsBasicCredentials.create(
-        configuration.getAwsAccessKeyId(), 
-        configuration.getAwsSecretAccessKey()
-    );
+private static AwsCredentials createAwsBasicCredentials(AwsbedrockConfiguration configuration){
 
+    if (configuration.getAwsSessionToken() == null || configuration.getAwsSessionToken().isEmpty()) {
+        return AwsBasicCredentials.create(
+            configuration.getAwsAccessKeyId(), 
+            configuration.getAwsSecretAccessKey()
+        );
+    } else {
+
+        return AwsSessionCredentials.create(
+            configuration.getAwsAccessKeyId(), 
+            configuration.getAwsSecretAccessKey(), 
+            configuration.getAwsSessionToken());
+    }
 }
 
 

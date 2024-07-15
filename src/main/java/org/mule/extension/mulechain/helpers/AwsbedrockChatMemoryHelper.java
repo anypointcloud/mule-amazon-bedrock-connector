@@ -5,6 +5,7 @@ import org.mule.extension.mulechain.internal.AwsbedrockConfiguration;
 import org.mule.extension.mulechain.internal.AwsbedrockParameters;
 
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.AwsSessionCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.core.exception.SdkClientException;
@@ -23,6 +24,14 @@ public class AwsbedrockChatMemoryHelper {
     .region(region)
     .build();
   }
+
+  private static BedrockRuntimeClient createClientSession(AwsSessionCredentials awsCreds, Region region) {
+    return BedrockRuntimeClient.builder()
+    .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
+    .region(region)
+    .build();
+  }
+
 
   private static InvokeModelRequest createInvokeRequest(String modelId, String nativeRequest) {
     return InvokeModelRequest.builder()
@@ -140,9 +149,16 @@ private static String getLlamaText(String prompt, AwsbedrockParameters awsBedroc
 
   private static BedrockRuntimeClient InitiateClient(AwsbedrockConfiguration configuration, AwsbedrockParameters awsBedrockParameters){
         // Initialize the AWS credentials
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(configuration.getAwsAccessKeyId(), configuration.getAwsSecretAccessKey());
+        //AwsBasicCredentials awsCreds = AwsBasicCredentials.create(configuration.getAwsAccessKeyId(), configuration.getAwsSecretAccessKey());
         // Create Bedrock Client 
-        return createClient(awsCreds, AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion()));
+        //return createClient(awsCreds, AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion()));
+        if (configuration.getAwsSessionToken() == null || configuration.getAwsSessionToken().isEmpty()) {
+            AwsBasicCredentials awsCredsBasic = AwsBasicCredentials.create(configuration.getAwsAccessKeyId(), configuration.getAwsSecretAccessKey());
+            return createClient(awsCredsBasic, AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion()));
+        } else {
+            AwsSessionCredentials awsCredsSession = AwsSessionCredentials.create(configuration.getAwsAccessKeyId(), configuration.getAwsSecretAccessKey(), configuration.getAwsSessionToken());
+            return createClientSession(awsCredsSession, AwsbedrockPayloadHelper.getRegion(awsBedrockParameters.getRegion()));
+        }
 
   }
 
