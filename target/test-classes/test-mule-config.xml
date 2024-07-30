@@ -1,0 +1,19 @@
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:aws-bedrock="http://www.mulesoft.org/schema/mule/aws-bedrock"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+          http://www.mulesoft.org/schema/mule/aws-bedrock http://www.mulesoft.org/schema/mule/aws-bedrock/current/mule-aws-bedrock.xsd">
+
+    <aws-bedrock:config name="config" configId="configId">
+        <aws-bedrock:connection requiredParameter="aValue" />
+    </aws-bedrock:config>
+
+    <flow name="sayHiFlow">
+        <aws-bedrock:say-hi person="Mariano Gonzalez"/>
+    </flow>
+
+    <flow name="retrieveInfoFlow">
+        <aws-bedrock:retrieve-info config-ref="config"/>
+    </flow>
+
+</mule>
