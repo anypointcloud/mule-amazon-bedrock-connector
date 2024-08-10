@@ -50,11 +50,11 @@ This class represents an extension configuration, values set in this class are c
 * <<CHAT-answer-prompt-memory>> {nbsp}
 * <<CUSTOM-model-details>> {nbsp}
 * <<CUSTOM-models-list>> {nbsp}
+* <<EMBEDDING-adhoc-query>> {nbsp}
 * <<EMBEDDING-generate-from-text>> {nbsp}
 * <<FOUNDATIONAL-model-details>> {nbsp}
 * <<FOUNDATIONAL-models-list>> {nbsp}
 * <<IMAGE-generate>> {nbsp}
-* <<RAG-embedding-text-score>> {nbsp}
 * <<SENTIMENT-analyze>> {nbsp}
 
 
@@ -527,6 +527,42 @@ List custom models by Id.
 
 
 
+[[EMBEDDING-adhoc-query]]
+=== EMBEDDING Adhoc Query
+`<aws-bedrock:embedding-adhoc-query>`
+
++++
+Performs retrieval augmented generation based on files
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Prompt a| String |  |  | *x*{nbsp}
+| File Path a| String |  |  | *x*{nbsp}
+| Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Model Name a| String |  |  +++amazon.titan-embed-text-v1+++ | {nbsp}
+| Region a| String |  |  +++us-east-1+++ | {nbsp}
+| Dimension a| Number |  |  +++1024+++ | {nbsp}
+| Normalize a| Boolean |  |  +++true+++ | {nbsp}
+| Option Type a| String |  |  +++FULL+++ | {nbsp}
+| Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
+| Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
+|======================
+
+==== Output
+[cols=".^50%,.^50%"]
+|======================
+| *Type* a| String
+|======================
+
+==== For Configurations.
+* <<Config>> {nbsp}
+
+
+
 [[EMBEDDING-generate-from-text]]
 === EMBEDDING Generate From Text
 `<aws-bedrock:embedding-generate-from-text>`
@@ -646,42 +682,6 @@ Generates an image based on text.
 | Width a| Number |  |  +++512+++ | {nbsp}
 | Cfg Scale a| Number |  |  +++8.0+++ | {nbsp}
 | Seed a| Number |  |  +++0+++ | {nbsp}
-| Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
-| Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
-|======================
-
-==== Output
-[cols=".^50%,.^50%"]
-|======================
-| *Type* a| String
-|======================
-
-==== For Configurations.
-* <<Config>> {nbsp}
-
-
-
-[[RAG-embedding-text-score]]
-=== RAG Embedding Text Score
-`<aws-bedrock:rag-embedding-text-score>`
-
-+++
-Performs retrieval augmented generation based on files
-+++
-
-==== Parameters
-[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
-|======================
-| Name | Type | Description | Default Value | Required
-| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
-| Prompt a| String |  |  | *x*{nbsp}
-| File Path a| String |  |  | *x*{nbsp}
-| Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
-| Model Name a| String |  |  +++amazon.titan-embed-text-v1+++ | {nbsp}
-| Region a| String |  |  +++us-east-1+++ | {nbsp}
-| Dimension a| Number |  |  +++1024+++ | {nbsp}
-| Normalize a| Boolean |  |  +++true+++ | {nbsp}
-| Option Type a| String |  |  +++FULL+++ | {nbsp}
 | Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
 | Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
 |======================

@@ -165,10 +165,10 @@ private static String getAnthropicClaudeText(String prompt, AwsbedrockParameters
 private static String getMistralAIText(String prompt, AwsbedrockParameters awsBedrockParameters) {
     JSONObject jsonRequest = new JSONObject();
     jsonRequest.put("prompt", "\n\nHuman:" + prompt + "\n\nAssistant:");
-    jsonRequest.put("temperature", awsBedrockParameters.getTemperature());
+    /*jsonRequest.put("temperature", awsBedrockParameters.getTemperature());
     jsonRequest.put("top_p", awsBedrockParameters.getTopP());
     jsonRequest.put("top_k", awsBedrockParameters.getTopK());
-    jsonRequest.put("max_tokens", awsBedrockParameters.getMaxTokenCount());
+    jsonRequest.put("max_tokens", awsBedrockParameters.getMaxTokenCount());*/
 
     return jsonRequest.toString();
 }
@@ -220,9 +220,7 @@ private static String getLlamaText(String prompt, AwsbedrockParameters awsBedroc
         return getCohereText(prompt, awsBedrockParameters);
     } else if (awsBedrockParameters.getModelName().contains("meta.llama")) {
         return getLlamaText(prompt, awsBedrockParameters);
-    } else if (awsBedrockParameters.getModelName().contains("mistral.")) {
-        return getLlamaText(prompt, awsBedrockParameters);
-    } else if (awsBedrockParameters.getModelName().contains("mistral.")) {
+    } else if (awsBedrockParameters.getModelName().contains("stability.stable")) {
         return getStabilityTitanText(prompt);
     } else {
         return "Unsupported model";
@@ -257,7 +255,7 @@ private static String getLlamaText(String prompt, AwsbedrockParameters awsBedroc
         // Encode and send the request to the Bedrock Runtime.
         InvokeModelRequest request = createInvokeRequest(awsBedrockParameters.getModelName(), nativeRequest);
 
-        //System.out.println("Native request: " + nativeRequest);
+        System.out.println("Native request: " + nativeRequest);
 
         InvokeModelResponse response = client.invokeModel(request);
         

@@ -37,7 +37,7 @@ public class AwsbedrockEmbeddingOperations {
    * @throws IOException 
    */
   @MediaType(value = ANY, strict = false)
-  @Alias("RAG-embedding-text-score")
+  @Alias("EMBEDDING-adhoc-query")
   public String ragEmbeddingTextScore(String prompt, String filePath, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockParametersEmbeddingDocument awsBedrockParameters) throws IOException, SAXException, TikaException{
       String response = AwsbedrockEmbeddingPayloadHelper.InvokeAdhocRAG(prompt, filePath, configuration, awsBedrockParameters);
     return response;
