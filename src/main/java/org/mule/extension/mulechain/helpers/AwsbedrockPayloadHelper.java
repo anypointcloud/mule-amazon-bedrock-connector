@@ -165,10 +165,10 @@ private static String getAnthropicClaudeText(String prompt, AwsbedrockParameters
 private static String getMistralAIText(String prompt, AwsbedrockParameters awsBedrockParameters) {
     JSONObject jsonRequest = new JSONObject();
     jsonRequest.put("prompt", "\n\nHuman:" + prompt + "\n\nAssistant:");
-    /*jsonRequest.put("temperature", awsBedrockParameters.getTemperature());
-    jsonRequest.put("top_p", awsBedrockParameters.getTopP());
-    jsonRequest.put("top_k", awsBedrockParameters.getTopK());
-    jsonRequest.put("max_tokens", awsBedrockParameters.getMaxTokenCount());*/
+    jsonRequest.put("temperature", awsBedrockParameters.getTemperature());
+   //jsonRequest.put("top_p", awsBedrockParameters.getTopP());
+    //jsonRequest.put("top_k", awsBedrockParameters.getTopK());
+    jsonRequest.put("max_tokens", awsBedrockParameters.getMaxTokenCount());
 
     return jsonRequest.toString();
 }
