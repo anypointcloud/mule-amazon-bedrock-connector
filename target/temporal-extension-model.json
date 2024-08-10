@@ -1,14 +1,14 @@
 {
   "name": "Amazon Bedrock",
   "description": "This is the main class of an extension, is the entry point from which configurations, connection providers, operations and sources are going to be declared.",
-  "version": "0.0.119",
+  "version": "0.0.120",
   "vendor": "Mulesoft",
   "category": "COMMUNITY",
   "xmlDsl": {
     "prefix": "aws-bedrock",
     "namespace": "http://www.mulesoft.org/schema/mule/aws-bedrock",
     "schemaLocation": "http://www.mulesoft.org/schema/mule/aws-bedrock/current/mule-aws-bedrock.xsd",
-    "schemaVersion": "0.0.119",
+    "schemaVersion": "0.0.120",
     "xsdFileName": "mule-aws-bedrock.xsd"
   },
   "resources": [],
@@ -20,7 +20,7 @@
   "configurations": [
     {
       "stereotype": {
-        "type": "AWS-BEDROCK-CONFIGURATION",
+        "type": "CONFIG",
         "namespace": "AWS-BEDROCK",
         "parent": {
           "type": "MODULE_CONFIG",
@@ -6835,7 +6835,7 @@
       ],
       "connectionProviders": [],
       "messageSources": [],
-      "name": "aws-bedrock-configuration",
+      "name": "Config",
       "description": "This class represents an extension configuration, values set in this class are commonly used across multiple operations since they represent something core from the extension.",
       "modelProperties": {}
     }

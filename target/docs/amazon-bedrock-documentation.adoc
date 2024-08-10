@@ -16,8 +16,8 @@ This is the main class of an extension, is the entry point from which configurat
 
 == Configurations
 ---
-[[aws-bedrock-configuration]]
-=== Aws Bedrock Configuration
+[[Config]]
+=== Config
 
 +++
 This class represents an extension configuration, values set in this class are commonly used across multiple operations since they represent something core from the extension.
@@ -91,7 +91,7 @@ Chat with an agent
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -124,7 +124,7 @@ Creates an agent with alias
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -157,7 +157,7 @@ Creates an agent alias
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -195,7 +195,7 @@ Helps defining an AI Agent with a prompt template
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -228,7 +228,7 @@ Get agent alias by its Id
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -260,7 +260,7 @@ Delete agent by its Id
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -292,7 +292,7 @@ Get agent alias by its Id
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -324,7 +324,7 @@ Get agent by its Id
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -356,7 +356,7 @@ Get agent by its Name
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -387,7 +387,7 @@ Lists all agents for the configuration
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -423,7 +423,7 @@ Implements a simple Chat agent
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -462,7 +462,7 @@ Implements a simple Chat agent
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -493,7 +493,7 @@ Get custom models by Id.
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -523,7 +523,7 @@ List custom models by Id.
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -557,7 +557,7 @@ Generate embeddings for text
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -588,7 +588,7 @@ Get foundational models by Id.
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -618,7 +618,7 @@ List foundational models by Id.
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -657,7 +657,7 @@ Generates an image based on text.
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -693,7 +693,7 @@ Performs retrieval augmented generation based on files
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
@@ -729,7 +729,7 @@ Example of a sentiment analyzer, which accepts text as input.
 |======================
 
 ==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
+* <<Config>> {nbsp}
 
 
 
