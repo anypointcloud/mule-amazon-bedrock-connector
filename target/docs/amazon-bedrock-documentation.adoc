@@ -47,12 +47,12 @@ This class represents an extension configuration, values set in this class are c
 * <<AGENT-get-by-name>> {nbsp}
 * <<AGENT-list>> {nbsp}
 * <<CHAT-answer-prompt>> {nbsp}
-* <<CHAT-memory-answer-prompt>> {nbsp}
+* <<CHAT-answer-prompt-memory>> {nbsp}
 * <<CUSTOM-model-details>> {nbsp}
 * <<CUSTOM-models-list>> {nbsp}
+* <<EMBEDDING-generate-from-text>> {nbsp}
 * <<FOUNDATIONAL-model-details>> {nbsp}
 * <<FOUNDATIONAL-models-list>> {nbsp}
-* <<GENERATE-embedding>> {nbsp}
 * <<IMAGE-generate>> {nbsp}
 * <<RAG-embedding-text-score>> {nbsp}
 * <<SENTIMENT-analyze>> {nbsp}
@@ -427,9 +427,9 @@ Implements a simple Chat agent
 
 
 
-[[CHAT-memory-answer-prompt]]
-=== CHAT Memory Answer Prompt
-`<aws-bedrock:chat-memory-answer-prompt>`
+[[CHAT-answer-prompt-memory]]
+=== CHAT Answer Prompt Memory
+`<aws-bedrock:chat-answer-prompt-memory>`
 
 +++
 Implements a simple Chat agent
@@ -527,6 +527,40 @@ List custom models by Id.
 
 
 
+[[EMBEDDING-generate-from-text]]
+=== EMBEDDING Generate From Text
+`<aws-bedrock:embedding-generate-from-text>`
+
++++
+Generate embeddings for text
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Prompt a| String |  |  | *x*{nbsp}
+| Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Model Name a| String |  |  +++amazon.titan-embed-text-v1+++ | {nbsp}
+| Region a| String |  |  +++us-east-1+++ | {nbsp}
+| Dimension a| Number |  |  +++1024+++ | {nbsp}
+| Normalize a| Boolean |  |  +++true+++ | {nbsp}
+| Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
+| Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
+|======================
+
+==== Output
+[cols=".^50%,.^50%"]
+|======================
+| *Type* a| String
+|======================
+
+==== For Configurations.
+* <<aws-bedrock-configuration>> {nbsp}
+
+
+
 [[FOUNDATIONAL-model-details]]
 === FOUNDATIONAL Model Details
 `<aws-bedrock:foundational-model-details>`
@@ -573,40 +607,6 @@ List foundational models by Id.
 | Configuration | String | The name of the configuration to use. | | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
-| Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
-| Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
-|======================
-
-==== Output
-[cols=".^50%,.^50%"]
-|======================
-| *Type* a| String
-|======================
-
-==== For Configurations.
-* <<aws-bedrock-configuration>> {nbsp}
-
-
-
-[[GENERATE-embedding]]
-=== GENERATE Embedding
-`<aws-bedrock:generate-embedding>`
-
-+++
-Generate embeddings for text
-+++
-
-==== Parameters
-[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
-|======================
-| Name | Type | Description | Default Value | Required
-| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
-| Prompt a| String |  |  | *x*{nbsp}
-| Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
-| Model Name a| String |  |  +++amazon.titan-embed-text-v1+++ | {nbsp}
-| Region a| String |  |  +++us-east-1+++ | {nbsp}
-| Dimension a| Number |  |  +++1024+++ | {nbsp}
-| Normalize a| Boolean |  |  +++true+++ | {nbsp}
 | Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
 | Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
 |======================

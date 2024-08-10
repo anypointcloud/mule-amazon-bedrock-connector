@@ -320,7 +320,7 @@
                 </parameter>
             </parameters>
         </operation>
-        <operation name="CHAT-memory-answer-prompt">
+        <operation name="CHAT-answer-prompt-memory">
             <description><![CDATA[Implements a simple Chat agent]]></description>
             <parameters>
                 <parameter name="prompt">
@@ -401,6 +401,35 @@
                 </parameter>
             </parameters>
         </operation>
+        <operation name="EMBEDDING-generate-from-text">
+            <description><![CDATA[Generate embeddings for text]]></description>
+            <parameters>
+                <parameter name="prompt">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="outputMimeType">
+                    <description><![CDATA[The mime type of the payload that this operation outputs.]]></description>
+                </parameter>
+                <parameter name="modelName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="region">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="dimension">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="normalize">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+            </parameters>
+        </operation>
         <operation name="FOUNDATIONAL-model-details">
             <description><![CDATA[Get foundational models by Id.]]></description>
             <parameters>
@@ -428,35 +457,6 @@
                     <description><![CDATA[The mime type of the payload that this operation outputs.]]></description>
                 </parameter>
                 <parameter name="region">
-                    <description><![CDATA[]]></description>
-                </parameter>
-                <parameter name="target">
-                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
-                </parameter>
-                <parameter name="targetValue">
-                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
-                </parameter>
-            </parameters>
-        </operation>
-        <operation name="GENERATE-embedding">
-            <description><![CDATA[Generate embeddings for text]]></description>
-            <parameters>
-                <parameter name="prompt">
-                    <description><![CDATA[]]></description>
-                </parameter>
-                <parameter name="outputMimeType">
-                    <description><![CDATA[The mime type of the payload that this operation outputs.]]></description>
-                </parameter>
-                <parameter name="modelName">
-                    <description><![CDATA[]]></description>
-                </parameter>
-                <parameter name="region">
-                    <description><![CDATA[]]></description>
-                </parameter>
-                <parameter name="dimension">
-                    <description><![CDATA[]]></description>
-                </parameter>
-                <parameter name="normalize">
                     <description><![CDATA[]]></description>
                 </parameter>
                 <parameter name="target">
