@@ -24,7 +24,7 @@ public class AwsbedrockEmbeddingOperations {
    * Generate embeddings for text
    */
   @MediaType(value = ANY, strict = false)
-  @Alias("GENERATE-embedding")
+  @Alias("EMBEDDING-generate-from-text")
   public String generateEmbeddings(String prompt, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockParametersEmbedding awsBedrockParameters){
       String response = AwsbedrockEmbeddingPayloadHelper.invokeModel(prompt, configuration, awsBedrockParameters);
     return response;

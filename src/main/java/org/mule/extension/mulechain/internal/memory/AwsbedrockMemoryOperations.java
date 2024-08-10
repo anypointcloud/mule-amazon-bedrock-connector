@@ -21,7 +21,7 @@ public class AwsbedrockMemoryOperations {
    * Implements a simple Chat agent
    */
   @MediaType(value = ANY, strict = false)
-  @Alias("CHAT-memory-answer-prompt")
+  @Alias("CHAT-answer-prompt-memory")
   public String answerPrompt(String prompt, String memoryPath, String memoryName, Integer keepLastMessages, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockParameters awsBedrockParameters){
       String response = AwsbedrockChatMemoryHelper.invokeModel(prompt, memoryPath, memoryName, keepLastMessages, configuration, awsBedrockParameters);
     return response;
