@@ -1,15 +1,15 @@
 {
   "name": "MAC AWS Bedrock",
   "description": "This is the main class of an extension, is the entry point from which configurations, connection providers, operations and sources are going to be declared.",
-  "version": "0.0.126",
+  "version": "0.0.128",
   "vendor": "Mulesoft",
   "category": "COMMUNITY",
   "xmlDsl": {
-    "prefix": "aws-bedrock",
-    "namespace": "http://www.mulesoft.org/schema/mule/aws-bedrock",
-    "schemaLocation": "http://www.mulesoft.org/schema/mule/aws-bedrock/current/mule-aws-bedrock.xsd",
-    "schemaVersion": "0.0.126",
-    "xsdFileName": "mule-aws-bedrock.xsd"
+    "prefix": "mac-bedrock",
+    "namespace": "http://www.mulesoft.org/schema/mule/mac-bedrock",
+    "schemaLocation": "http://www.mulesoft.org/schema/mule/mac-bedrock/current/mule-mac-bedrock.xsd",
+    "schemaVersion": "0.0.128",
+    "xsdFileName": "mule-mac-bedrock.xsd"
   },
   "resources": [],
   "subTypes": [],
@@ -21,7 +21,7 @@
     {
       "stereotype": {
         "type": "CONFIG",
-        "namespace": "AWS-BEDROCK",
+        "namespace": "MAC-BEDROCK",
         "parent": {
           "type": "MODULE_CONFIG",
           "namespace": "MULE"
@@ -6848,16 +6848,6 @@
   "notifications": [],
   "errors": [
     {
-      "error": "AWS-BEDROCK:CONNECTIVITY",
-      "parent": "MULE:CONNECTIVITY",
-      "handleable": true
-    },
-    {
-      "error": "MULE:CONNECTIVITY",
-      "parent": "MULE:ANY",
-      "handleable": true
-    },
-    {
       "error": "MULE:ANY",
       "handleable": true
     },
@@ -6867,8 +6857,18 @@
       "handleable": true
     },
     {
-      "error": "AWS-BEDROCK:RETRY_EXHAUSTED",
+      "error": "MAC-BEDROCK:RETRY_EXHAUSTED",
       "parent": "MULE:RETRY_EXHAUSTED",
+      "handleable": true
+    },
+    {
+      "error": "MULE:CONNECTIVITY",
+      "parent": "MULE:ANY",
+      "handleable": true
+    },
+    {
+      "error": "MAC-BEDROCK:CONNECTIVITY",
+      "parent": "MULE:CONNECTIVITY",
       "handleable": true
     }
   ],

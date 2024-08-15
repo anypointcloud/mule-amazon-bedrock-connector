@@ -1,6 +1,7 @@
 package org.mule.extension.mulechain.internal;
 
 import org.mule.runtime.extension.api.annotation.Operations;
+import org.mule.runtime.extension.api.annotation.dsl.xml.Xml;
 import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 import org.mule.extension.mulechain.internal.agents.AwsbedrockAgentsOperations;

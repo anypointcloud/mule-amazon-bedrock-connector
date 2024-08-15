@@ -3,7 +3,7 @@
     "id": "java",
     "attributes": {
       "type": "org.mule.extension.mulechain.internal.AwsbedrockExtension",
-      "version": "0.0.126"
+      "version": "0.0.128"
     }
   },
   "name": "MAC AWS Bedrock",

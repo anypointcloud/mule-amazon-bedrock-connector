@@ -12,7 +12,7 @@ import static org.mule.sdk.api.meta.JavaVersion.JAVA_8;
  * This is the main class of an extension, is the entry point from which configurations, connection providers, operations
  * and sources are going to be declared.
  */
-@Xml(prefix = "aws-bedrock")
+@Xml(prefix = "mac-bedrock")
 @Extension(name = "MAC AWS Bedrock")
 @Configurations(AwsbedrockConfiguration.class)
 @JavaVersionSupport({JAVA_8, JAVA_11, JAVA_17})

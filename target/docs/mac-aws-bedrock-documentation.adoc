@@ -63,7 +63,7 @@ This class represents an extension configuration, values set in this class are c
 
 [[AGENT-chat]]
 === AGENT Chat
-`<aws-bedrock:agent-chat>`
+`<mac-bedrock:agent-chat>`
 
 +++
 Chat with an agent
@@ -97,7 +97,7 @@ Chat with an agent
 
 [[AGENT-create]]
 === AGENT Create
-`<aws-bedrock:agent-create>`
+`<mac-bedrock:agent-create>`
 
 +++
 Creates an agent with alias
@@ -130,7 +130,7 @@ Creates an agent with alias
 
 [[AGENT-create-alias]]
 === AGENT Create Alias
-`<aws-bedrock:agent-create-alias>`
+`<mac-bedrock:agent-create-alias>`
 
 +++
 Creates an agent alias
@@ -163,7 +163,7 @@ Creates an agent alias
 
 [[AGENT-define-prompt-template]]
 === AGENT Define Prompt Template
-`<aws-bedrock:agent-define-prompt-template>`
+`<mac-bedrock:agent-define-prompt-template>`
 
 +++
 Helps defining an AI Agent with a prompt template
@@ -201,7 +201,7 @@ Helps defining an AI Agent with a prompt template
 
 [[AGENT-delete-agent-aliases]]
 === AGENT Delete Agent Aliases
-`<aws-bedrock:agent-delete-agent-aliases>`
+`<mac-bedrock:agent-delete-agent-aliases>`
 
 +++
 Get agent alias by its Id
@@ -234,7 +234,7 @@ Get agent alias by its Id
 
 [[AGENT-delete-by-id]]
 === AGENT Delete By Id
-`<aws-bedrock:agent-delete-by-id>`
+`<mac-bedrock:agent-delete-by-id>`
 
 +++
 Delete agent by its Id
@@ -266,7 +266,7 @@ Delete agent by its Id
 
 [[AGENT-get-alias-by-agent-id]]
 === AGENT Get Alias By Agent Id
-`<aws-bedrock:agent-get-alias-by-agent-id>`
+`<mac-bedrock:agent-get-alias-by-agent-id>`
 
 +++
 Get agent alias by its Id
@@ -298,7 +298,7 @@ Get agent alias by its Id
 
 [[AGENT-get-by-id]]
 === AGENT Get By Id
-`<aws-bedrock:agent-get-by-id>`
+`<mac-bedrock:agent-get-by-id>`
 
 +++
 Get agent by its Id
@@ -330,7 +330,7 @@ Get agent by its Id
 
 [[AGENT-get-by-name]]
 === AGENT Get By Name
-`<aws-bedrock:agent-get-by-name>`
+`<mac-bedrock:agent-get-by-name>`
 
 +++
 Get agent by its Name
@@ -362,7 +362,7 @@ Get agent by its Name
 
 [[AGENT-list]]
 === AGENT List
-`<aws-bedrock:agent-list>`
+`<mac-bedrock:agent-list>`
 
 +++
 Lists all agents for the configuration
@@ -393,7 +393,7 @@ Lists all agents for the configuration
 
 [[CHAT-answer-prompt]]
 === CHAT Answer Prompt
-`<aws-bedrock:chat-answer-prompt>`
+`<mac-bedrock:chat-answer-prompt>`
 
 +++
 Implements a simple Chat agent
@@ -429,7 +429,7 @@ Implements a simple Chat agent
 
 [[CHAT-answer-prompt-memory]]
 === CHAT Answer Prompt Memory
-`<aws-bedrock:chat-answer-prompt-memory>`
+`<mac-bedrock:chat-answer-prompt-memory>`
 
 +++
 Implements a simple Chat agent
@@ -468,7 +468,7 @@ Implements a simple Chat agent
 
 [[CUSTOM-model-details]]
 === CUSTOM Model Details
-`<aws-bedrock:custom-model-details>`
+`<mac-bedrock:custom-model-details>`
 
 +++
 Get custom models by Id.
@@ -499,7 +499,7 @@ Get custom models by Id.
 
 [[CUSTOM-models-list]]
 === CUSTOM Models List
-`<aws-bedrock:custom-models-list>`
+`<mac-bedrock:custom-models-list>`
 
 +++
 List custom models by Id.
@@ -529,7 +529,7 @@ List custom models by Id.
 
 [[EMBEDDING-adhoc-query]]
 === EMBEDDING Adhoc Query
-`<aws-bedrock:embedding-adhoc-query>`
+`<mac-bedrock:embedding-adhoc-query>`
 
 +++
 Performs retrieval augmented generation based on files
@@ -565,7 +565,7 @@ Performs retrieval augmented generation based on files
 
 [[EMBEDDING-generate-from-text]]
 === EMBEDDING Generate From Text
-`<aws-bedrock:embedding-generate-from-text>`
+`<mac-bedrock:embedding-generate-from-text>`
 
 +++
 Generate embeddings for text
@@ -599,7 +599,7 @@ Generate embeddings for text
 
 [[FOUNDATIONAL-model-details]]
 === FOUNDATIONAL Model Details
-`<aws-bedrock:foundational-model-details>`
+`<mac-bedrock:foundational-model-details>`
 
 +++
 Get foundational models by Id.
@@ -630,7 +630,7 @@ Get foundational models by Id.
 
 [[FOUNDATIONAL-models-list]]
 === FOUNDATIONAL Models List
-`<aws-bedrock:foundational-models-list>`
+`<mac-bedrock:foundational-models-list>`
 
 +++
 List foundational models by Id.
@@ -660,7 +660,7 @@ List foundational models by Id.
 
 [[IMAGE-generate]]
 === IMAGE Generate
-`<aws-bedrock:image-generate>`
+`<mac-bedrock:image-generate>`
 
 +++
 Generates an image based on text.
@@ -699,7 +699,7 @@ Generates an image based on text.
 
 [[SENTIMENT-analyze]]
 === SENTIMENT Analyze
-`<aws-bedrock:sentiment-analyze>`
+`<mac-bedrock:sentiment-analyze>`
 
 +++
 Example of a sentiment analyzer, which accepts text as input.
