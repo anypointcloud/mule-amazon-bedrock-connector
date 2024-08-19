@@ -1,8 +1,11 @@
 package org.mule.extension.mulechain.internal.embeddings;
 
-import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
+import static org.apache.commons.io.IOUtils.toInputStream;
+import static org.mule.runtime.extension.api.annotation.param.MediaType.APPLICATION_JSON;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.tika.exception.TikaException;
 import org.mule.runtime.extension.api.annotation.Alias;
@@ -23,11 +26,11 @@ public class AwsbedrockEmbeddingOperations {
   /**
    * Generate embeddings for text
    */
-  @MediaType(value = ANY, strict = false)
+  @MediaType(value = APPLICATION_JSON, strict = false)
   @Alias("EMBEDDING-generate-from-text")
-  public String generateEmbeddings(String prompt, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockParametersEmbedding awsBedrockParameters){
+  public InputStream generateEmbeddings(String prompt, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockParametersEmbedding awsBedrockParameters){
       String response = AwsbedrockEmbeddingPayloadHelper.invokeModel(prompt, configuration, awsBedrockParameters);
-    return response;
+    return toInputStream(response, StandardCharsets.UTF_8);
   }
 
   /**
@@ -36,11 +39,11 @@ public class AwsbedrockEmbeddingOperations {
    * @throws SAXException 
    * @throws IOException 
    */
-  @MediaType(value = ANY, strict = false)
+  @MediaType(value = APPLICATION_JSON, strict = false)
   @Alias("EMBEDDING-adhoc-query")
-  public String ragEmbeddingTextScore(String prompt, String filePath, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockParametersEmbeddingDocument awsBedrockParameters) throws IOException, SAXException, TikaException{
+  public InputStream ragEmbeddingTextScore(String prompt, String filePath, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockParametersEmbeddingDocument awsBedrockParameters) throws IOException, SAXException, TikaException{
       String response = AwsbedrockEmbeddingPayloadHelper.InvokeAdhocRAG(prompt, filePath, configuration, awsBedrockParameters);
-    return response;
-  }
+      return toInputStream(response, StandardCharsets.UTF_8);
+    }
 
 }

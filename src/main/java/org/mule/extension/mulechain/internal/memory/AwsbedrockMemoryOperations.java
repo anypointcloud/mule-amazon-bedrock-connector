@@ -1,6 +1,10 @@
 package org.mule.extension.mulechain.internal.memory;
 
-import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
+import static org.apache.commons.io.IOUtils.toInputStream;
+import static org.mule.runtime.extension.api.annotation.param.MediaType.APPLICATION_JSON;
+
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import org.mule.runtime.extension.api.annotation.Alias;
 import org.mule.runtime.extension.api.annotation.param.Config;
@@ -20,11 +24,11 @@ public class AwsbedrockMemoryOperations {
   /**
    * Implements a simple Chat agent
    */
-  @MediaType(value = ANY, strict = false)
+  @MediaType(value = APPLICATION_JSON, strict = false)
   @Alias("CHAT-answer-prompt-memory")
-  public String answerPrompt(String prompt, String memoryPath, String memoryName, Integer keepLastMessages, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockParameters awsBedrockParameters){
+  public InputStream answerPrompt(String prompt, String memoryPath, String memoryName, Integer keepLastMessages, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockParameters awsBedrockParameters){
       String response = AwsbedrockChatMemoryHelper.invokeModel(prompt, memoryPath, memoryName, keepLastMessages, configuration, awsBedrockParameters);
-    return response;
+      return toInputStream(response, StandardCharsets.UTF_8);
   }
 
   

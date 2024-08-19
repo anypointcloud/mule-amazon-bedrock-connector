@@ -1,6 +1,10 @@
 package org.mule.extension.mulechain.internal.image;
 
-import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
+import static org.apache.commons.io.IOUtils.toInputStream;
+import static org.mule.runtime.extension.api.annotation.param.MediaType.APPLICATION_JSON;
+
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import org.mule.runtime.extension.api.annotation.Alias;
 import org.mule.runtime.extension.api.annotation.param.Config;
@@ -20,11 +24,11 @@ public class AwsbedrockImageModelOperations {
   /**
    * Generates an image based on text.
    */
-  @MediaType(value = ANY, strict = false)
+  @MediaType(value = APPLICATION_JSON, strict = false)
   @Alias("IMAGE-generate")
-  public String generateImage(String TextToImage, String AvoidInImage, String fullPathOutput, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockImageParameters awsBedrockParameters){
+  public InputStream generateImage(String TextToImage, String AvoidInImage, String fullPathOutput, @Config AwsbedrockConfiguration configuration, @ParameterGroup(name= "Additional properties") AwsbedrockImageParameters awsBedrockParameters){
       String response= AwsbedrockImagePayloadHelper.invokeModel(TextToImage, AvoidInImage, fullPathOutput, configuration, awsBedrockParameters);
-      return response;
+      return toInputStream(response, StandardCharsets.UTF_8);
   }
 
   

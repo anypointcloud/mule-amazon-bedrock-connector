@@ -78,6 +78,10 @@ Chat with an agent
 | Agent Alias Id a| String |  |  | *x*{nbsp}
 | Prompt a| String |  |  | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
@@ -87,7 +91,7 @@ Chat with an agent
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -111,6 +115,10 @@ Creates an agent with alias
 | Agent Name a| String |  |  | *x*{nbsp}
 | Instructions a| String |  |  | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
@@ -120,7 +128,7 @@ Creates an agent with alias
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -144,6 +152,10 @@ Creates an agent alias
 | Agent Alias a| String |  |  | *x*{nbsp}
 | Agent Id a| String |  |  | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
@@ -153,7 +165,7 @@ Creates an agent alias
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -178,6 +190,10 @@ Helps defining an AI Agent with a prompt template
 | Instructions a| String |  |  | *x*{nbsp}
 | Dataset a| String |  |  | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-text-express-v1+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Temperature a| Number |  |  +++0.7+++ | {nbsp}
@@ -191,7 +207,7 @@ Helps defining an AI Agent with a prompt template
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -215,6 +231,10 @@ Get agent alias by its Id
 | Agent Id a| String |  |  | *x*{nbsp}
 | Agent Alias Name a| String |  |  | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
@@ -224,7 +244,7 @@ Get agent alias by its Id
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -247,6 +267,10 @@ Delete agent by its Id
 | Configuration | String | The name of the configuration to use. | | *x*{nbsp}
 | Agent Id a| String |  |  | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
@@ -256,7 +280,7 @@ Delete agent by its Id
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -279,6 +303,10 @@ Get agent alias by its Id
 | Configuration | String | The name of the configuration to use. | | *x*{nbsp}
 | Agent Id a| String |  |  | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
@@ -288,7 +316,7 @@ Get agent alias by its Id
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -311,6 +339,10 @@ Get agent by its Id
 | Configuration | String | The name of the configuration to use. | | *x*{nbsp}
 | Agent Id a| String |  |  | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
@@ -320,7 +352,7 @@ Get agent by its Id
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -343,6 +375,10 @@ Get agent by its Name
 | Configuration | String | The name of the configuration to use. | | *x*{nbsp}
 | Agent Name a| String |  |  | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
@@ -352,7 +388,7 @@ Get agent by its Name
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -374,6 +410,10 @@ Lists all agents for the configuration
 | Name | Type | Description | Default Value | Required
 | Configuration | String | The name of the configuration to use. | | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-text-premier-v1:0+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
@@ -383,7 +423,7 @@ Lists all agents for the configuration
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -406,6 +446,10 @@ Implements a simple Chat agent
 | Configuration | String | The name of the configuration to use. | | *x*{nbsp}
 | Prompt a| String |  |  | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-text-express-v1+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Temperature a| Number |  |  +++0.7+++ | {nbsp}
@@ -419,7 +463,7 @@ Implements a simple Chat agent
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -445,6 +489,10 @@ Implements a simple Chat agent
 | Memory Name a| String |  |  | *x*{nbsp}
 | Keep Last Messages a| Number |  |  | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-text-express-v1+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Temperature a| Number |  |  +++0.7+++ | {nbsp}
@@ -458,7 +506,7 @@ Implements a simple Chat agent
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -480,6 +528,10 @@ Get custom models by Id.
 | Name | Type | Description | Default Value | Required
 | Configuration | String | The name of the configuration to use. | | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-text-express-v1+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
@@ -489,7 +541,7 @@ Get custom models by Id.
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -511,6 +563,10 @@ List custom models by Id.
 | Name | Type | Description | Default Value | Required
 | Configuration | String | The name of the configuration to use. | | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
 | Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
@@ -519,7 +575,7 @@ List custom models by Id.
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -543,6 +599,10 @@ Performs retrieval augmented generation based on files
 | Prompt a| String |  |  | *x*{nbsp}
 | File Path a| String |  |  | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-embed-text-v1+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Dimension a| Number |  |  +++1024+++ | {nbsp}
@@ -555,7 +615,7 @@ Performs retrieval augmented generation based on files
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -578,6 +638,10 @@ Generate embeddings for text
 | Configuration | String | The name of the configuration to use. | | *x*{nbsp}
 | Prompt a| String |  |  | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-embed-text-v1+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Dimension a| Number |  |  +++1024+++ | {nbsp}
@@ -589,7 +653,7 @@ Generate embeddings for text
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -611,6 +675,10 @@ Get foundational models by Id.
 | Name | Type | Description | Default Value | Required
 | Configuration | String | The name of the configuration to use. | | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-text-express-v1+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
@@ -620,7 +688,7 @@ Get foundational models by Id.
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -642,6 +710,10 @@ List foundational models by Id.
 | Name | Type | Description | Default Value | Required
 | Configuration | String | The name of the configuration to use. | | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
 | Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
@@ -650,7 +722,7 @@ List foundational models by Id.
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -675,6 +747,10 @@ Generates an image based on text.
 | Avoid In Image a| String |  |  | *x*{nbsp}
 | Full Path Output a| String |  |  | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-image-generator-v1:0+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Num Of Images a| Number |  |  +++1+++ | {nbsp}
@@ -689,7 +765,7 @@ Generates an image based on text.
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -712,6 +788,10 @@ Example of a sentiment analyzer, which accepts text as input.
 | Configuration | String | The name of the configuration to use. | | *x*{nbsp}
 | Text To Analyze a| String |  |  | *x*{nbsp}
 | Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Output Encoding a| String |  +++The encoding of the payload that this operation outputs.+++ |  | {nbsp}
+| Streaming Strategy a| * <<repeatable-in-memory-stream>>
+* <<repeatable-file-store-stream>>
+* <<non-repeatable-stream>> |  +++Configure if repeatable streams should be used and their behaviour+++ |  | {nbsp}
 | Model Name a| String |  |  +++amazon.titan-text-express-v1+++ | {nbsp}
 | Region a| String |  |  +++us-east-1+++ | {nbsp}
 | Temperature a| Number |  |  +++0.7+++ | {nbsp}
@@ -725,7 +805,7 @@ Example of a sentiment analyzer, which accepts text as input.
 ==== Output
 [cols=".^50%,.^50%"]
 |======================
-| *Type* a| String
+| *Type* a| Binary
 |======================
 
 ==== For Configurations.
@@ -751,5 +831,37 @@ Example of a sentiment analyzer, which accepts text as input.
 ** MINUTES
 ** HOURS
 ** DAYS | A time unit that qualifies the maxIdleTime attribute |  | 
+|======================
+
+[[repeatable-in-memory-stream]]
+=== Repeatable In Memory Stream
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Initial Buffer Size a| Number | This is the amount of memory that will be allocated in order to consume the stream and provide random access to it. If the stream contains more data than can be fit into this buffer, then it will be expanded by according to the bufferSizeIncrement attribute, with an upper limit of maxInMemorySize. |  | 
+| Buffer Size Increment a| Number | This is by how much will be buffer size by expanded if it exceeds its initial size. Setting a value of zero or lower will mean that the buffer should not expand, meaning that a STREAM_MAXIMUM_SIZE_EXCEEDED error will be raised when the buffer gets full. |  | 
+| Max Buffer Size a| Number | This is the maximum amount of memory that will be used. If more than that is used then a STREAM_MAXIMUM_SIZE_EXCEEDED error will be raised. A value lower or equal to zero means no limit. |  | 
+| Buffer Unit a| Enumeration, one of:
+
+** BYTE
+** KB
+** MB
+** GB | The unit in which all these attributes are expressed |  | 
+|======================
+
+[[repeatable-file-store-stream]]
+=== Repeatable File Store Stream
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| In Memory Size a| Number | Defines the maximum memory that the stream should use to keep data in memory. If more than that is consumed then it will start to buffer the content on disk. |  | 
+| Buffer Unit a| Enumeration, one of:
+
+** BYTE
+** KB
+** MB
+** GB | The unit in which maxInMemorySize is expressed |  | 
 |======================
 

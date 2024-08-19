@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mule.mulechain</groupId>
     <artifactId>mulechain-bedrock</artifactId>
-    <version>0.0.128</version>
+    <version>0.0.140</version>
     <packaging>mule-extension</packaging>
     <name>Aws-bedrock Extension</name>
 
@@ -110,6 +110,11 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.17.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.16.1</version>
         </dependency>
 
     </dependencies>
