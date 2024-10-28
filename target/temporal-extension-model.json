@@ -1,14 +1,14 @@
 {
   "name": "MAC AWS Bedrock",
   "description": "This is the main class of an extension, is the entry point from which configurations, connection providers, operations and sources are going to be declared.",
-  "version": "0.0.140",
+  "version": "0.1.1-SNAPSHOT",
   "vendor": "Mulesoft",
   "category": "COMMUNITY",
   "xmlDsl": {
     "prefix": "mac-bedrock",
     "namespace": "http://www.mulesoft.org/schema/mule/mac-bedrock",
     "schemaLocation": "http://www.mulesoft.org/schema/mule/mac-bedrock/current/mule-mac-bedrock.xsd",
-    "schemaVersion": "0.0.140",
+    "schemaVersion": "0.1.1-SNAPSHOT",
     "xsdFileName": "mule-mac-bedrock.xsd"
   },
   "resources": [],
@@ -139,7 +139,9 @@
                           "isAbstract": false,
                           "isFinal": true,
                           "implementedInterfaces": [
-                            "java.lang.Comparable"
+                            "java.lang.Comparable",
+                            "java.lang.constant.Constable",
+                            "java.lang.constant.ConstantDesc"
                           ],
                           "parent": "java.lang.Number",
                           "genericTypes": [],
@@ -2301,7 +2303,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -2344,7 +2348,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -2387,7 +2393,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -2431,7 +2439,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -5954,7 +5964,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -5997,7 +6009,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -6040,7 +6054,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -6084,7 +6100,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -6351,7 +6369,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -6720,7 +6740,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -6763,7 +6785,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -6806,7 +6830,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -6850,7 +6876,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -8324,7 +8352,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -8930,7 +8960,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -10460,7 +10492,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -10504,7 +10538,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -10548,7 +10584,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -10592,7 +10630,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -10635,7 +10675,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -11176,7 +11218,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -11219,7 +11263,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -11262,7 +11308,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
@@ -11306,7 +11354,9 @@
                         "isAbstract": false,
                         "isFinal": true,
                         "implementedInterfaces": [
-                          "java.lang.Comparable"
+                          "java.lang.Comparable",
+                          "java.lang.constant.Constable",
+                          "java.lang.constant.ConstantDesc"
                         ],
                         "parent": "java.lang.Number",
                         "genericTypes": [],
